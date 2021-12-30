@@ -1,10 +1,17 @@
 import UserInterface from "./UserInterface";
-
+import Grid from '@mui/material/Grid';
+import "./Messenger.css";
 
 const Messenger = () => {
     return(
-        <div>
-            <UserInterface/>
+        <div className="messengerContainer">
+            <div className="leftPanel">
+                Left Panel
+            </div>
+
+            <div className="rightPanel">
+                Right Panel
+            </div>
         </div>
     )
 };

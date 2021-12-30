@@ -1,0 +1,13 @@
+.messengerContainer {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 2fr 8fr;
+}
+
+.leftPanel {
+
+}
+
+.rightPanel {
+    
+}
