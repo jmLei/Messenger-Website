@@ -1,5 +1,5 @@
+import MessageBubble from "./MessageBubble";
 import UserInterface from "./UserInterface";
-import Grid from '@mui/material/Grid';
 import "./Messenger.css";
 
 const Messenger = () => {
@@ -10,7 +10,8 @@ const Messenger = () => {
             </div>
 
             <div className="rightPanel">
-                Right Panel
+                <MessageBubble/>
+                <UserInterface/>
             </div>
         </div>
     )
