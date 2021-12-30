@@ -1,3 +1,7 @@
+.messageBubbleContainer {
+    overflow-y: scroll;
+}
+
 .messengerContainer {
     display: grid;
     height: 100vh;
@@ -9,5 +13,7 @@
 }
 
 .rightPanel {
-    
+    display: grid;
+    grid-template-rows: 9fr 1fr;
+    overflow-y: hidden;
 }

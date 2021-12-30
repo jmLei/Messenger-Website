@@ -1,11 +1,12 @@
-import Button from "@mui/material/Button";
+import {useState} from "react";
 import IconButton from '@mui/material/IconButton';
 import SendIcon from '@material-ui/icons/Send';
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 
 import "./UserInterface.css";
 
-const UserInterface = () => {
+const UserInterface = (props) => {
+
     return(
         <div className="UIPanel">
                 <TextareaAutosize
@@ -16,8 +17,12 @@ const UserInterface = () => {
                         fontSize:"14px",
                         width:"50%"
                     }}
+                    onInput={props.handleInputChange}
                 />
-                <IconButton color="primary">
+                <IconButton 
+                    color="primary"
+                    onClick={props.handleClick}
+                >
                     <SendIcon/>
                 </IconButton>
             </div>
