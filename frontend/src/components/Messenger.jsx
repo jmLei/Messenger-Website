@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 import MessageBubble from "./MessageBubble";
 import UserInterface from "./UserInterface";
@@ -6,15 +6,28 @@ import "./Messenger.css";
 
 const Messenger = () => {
     const [message, setMessage] = useState("");
-    const [messages, setMessages] = useState([]);
+    const [time, setTime] = useState("");
+    const [messageBubbles, setMessageBubbles] = useState([]);
 
     const handleInputChange = (event) => {
         setMessage(event.target.value);
     };
 
     const handleClick = () => {
-        setMessages(messages => [...messages, message]);
+        const now = new Date();
+        setTime(now.toString());
     };
+
+    useEffect(() => {
+        if(time !== "") {
+            const messageBubble = {
+                message: message,
+                time: time
+            }
+            setMessageBubbles(messageBubbles => [...messageBubbles, messageBubble]);
+        }
+    }, [time]);
+
 
     return(
         <div className="messengerContainer">
@@ -24,7 +37,7 @@ const Messenger = () => {
 
             <div className="rightPanel">
                 <div>
-                    {messages.map(message => <MessageBubble message={message}/>)}
+                    {messageBubbles.map(messageBubble => <MessageBubble messageBubble={messageBubble}/>)}
                 </div>
 
                 <UserInterface

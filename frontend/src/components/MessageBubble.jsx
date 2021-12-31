@@ -12,7 +12,7 @@ const MessageBubble = (props) => {
                 }}
             >
                 <CardContent>
-                    {props.message}
+                    {props.messageBubble.time}
                 </CardContent>
             </Card>
         </div>
