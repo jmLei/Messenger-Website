@@ -1,9 +1,9 @@
-import GoogleLoginComponent from "./components/GoogleLoginComponent";
+import Messenger from "./components/Messenger";
 
 function App() {
     return (
         <div>
-            <GoogleLoginComponent/>
+            <Messenger/>
         </div>
   );
 }

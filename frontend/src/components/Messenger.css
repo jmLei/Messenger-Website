@@ -8,12 +8,9 @@
     grid-template-columns: 2fr 8fr;
 }
 
-.leftPanel {
-
-}
-
 .rightPanel {
     display: grid;
     grid-template-rows: 9fr 1fr;
     overflow-y: hidden;
+    padding-left: 50px;
 }

@@ -1,7 +1,9 @@
 import {useEffect, useState} from "react";
 
+import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 
+import GoogleLoginComponent from "./GoogleLoginComponent";
 import MessageBubble from "./MessageBubble";
 import UserInterface from "./UserInterface";
 import "./Messenger.css";
@@ -34,9 +36,11 @@ const Messenger = () => {
 
     return(
         <div className="messengerContainer">
-            <div className="leftPanel">
-                <TextField id="outlined-basic" label="Outlined" variant="outlined" style={{width:"90%"}} />
-            </div>
+            <Stack spacing={1}>
+                <GoogleLoginComponent/>
+                <TextField id="outlined-basic" label="Search for users" variant="outlined" />
+            </Stack>
+            
 
             <div className="rightPanel">
                 <div className="messageBubbleContainer">
