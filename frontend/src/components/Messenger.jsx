@@ -1,5 +1,7 @@
 import {useEffect, useState} from "react";
 
+import TextField from '@mui/material/TextField';
+
 import MessageBubble from "./MessageBubble";
 import UserInterface from "./UserInterface";
 import "./Messenger.css";
@@ -22,6 +24,7 @@ const Messenger = () => {
         if(time !== "") {
             const messageBubble = {
                 message: message,
+                sender: "Andrew Shinjo",
                 time: time
             }
             setMessageBubbles(messageBubbles => [...messageBubbles, messageBubble]);
@@ -32,12 +35,16 @@ const Messenger = () => {
     return(
         <div className="messengerContainer">
             <div className="leftPanel">
-                Left Panel
+                <TextField id="outlined-basic" label="Outlined" variant="outlined" style={{width:"90%"}} />
             </div>
 
             <div className="rightPanel">
-                <div>
-                    {messageBubbles.map(messageBubble => <MessageBubble messageBubble={messageBubble}/>)}
+                <div className="messageBubbleContainer">
+                    {
+                        (messageBubbles.length === 0) ?
+                        <p>Empty chatroom</p> :
+                        messageBubbles.map(messageBubble => <MessageBubble messageBubble={messageBubble}/>)
+                    }
                 </div>
 
                 <UserInterface

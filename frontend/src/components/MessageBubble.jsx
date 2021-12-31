@@ -1,5 +1,9 @@
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
+import Typography from '@mui/material/Typography';
+
+
 
 
 const MessageBubble = (props) => {
@@ -11,8 +15,14 @@ const MessageBubble = (props) => {
                     maxWidth: 500
                 }}
             >
+                <CardHeader
+                    title={props.messageBubble.sender}
+                    subheader={props.messageBubble.time}
+                />
                 <CardContent>
-                    {props.messageBubble.time}
+                    <Typography variant="body1">
+                        {props.messageBubble.message}   
+                    </Typography>
                 </CardContent>
             </Card>
         </div>

@@ -1,0 +1,14 @@
+{
+    "name": "Andrew",
+    "friends": [
+        "Kevin", 
+        "Mike",
+        "Bob"
+    ],
+    "chatrooms": [
+        {
+            "users": ["Andrew", "Kevin"],
+            "chatHistory": []
+        }
+    ]
+}
