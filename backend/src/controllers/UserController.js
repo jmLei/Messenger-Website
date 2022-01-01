@@ -1,10 +1,13 @@
 const userService = require("../services/UserService");
 
 module.exports = {
-    post : (req, res) => {
-        console.log("UserController.post executing");
-        console.log(req.body);
-        userService.addUser(req.body);
-        res.sendStatus(200);
+    get : async (req, res) => {
+        const email = req.params.email;
+        const user = await userService.getUser(email);
+        res.send(user);
+    },
+
+    post : async (req, res) => {
+        await userService.addUser(req.body);
     },
 };
