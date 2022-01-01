@@ -1,17 +1,10 @@
 const express = require("express");
-const http = require("http");
-const redis = require("redis");
-
 const app = express();
+const client = require("./redis");
 
-// Connect Redis to Node.js
-(async () => {
-    const client = redis.createClient();
-    client.on("error", (err) => console.log("Redis Client Error", err));
-    await client.connect();
-    await client.set("key", "value");
-    const value = await client.get("key");
-})();
+// const userRoute = require("./routes/UserRoute");
+// app.use("/", userRoute);
 
-app.listen(8080, "127.0.0.1");
-console.log("Node server running on port 8080");
+app.listen(8080, () => {
+    console.log("Server running on port 8080.");
+});
