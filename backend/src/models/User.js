@@ -1,8 +1,11 @@
-const User = (email, name) => {
+const User = (email, name, chatrooms) => {
     const myUser = {
-        "email": email,
-        "name": name
-    }
+        "key": email,
+        "value": {
+            "name": name,
+            "chatrooms": chatrooms
+        }
+    };
     return myUser;
 };
 
