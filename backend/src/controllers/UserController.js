@@ -1,13 +1,19 @@
 const userService = require("../services/UserService");
 
 module.exports = {
-    get : async (req, res) => {
-        const email = req.params.email;
+    signin: async (req, res) => {
+        const email = req.body.email;
         const user = await userService.getUser(email);
-        res.send(user);
-    },
+        if(user === null) { // if user is not in database
+            console.log(req.body);
+            await userService.addUser(req.body);
+        }
 
-    post : async (req, res) => {
-        await userService.addUser(req.body);
-    },
+        // get all info user needs
+        // 1. list of chatroom IDs user is in
+
+        const chatRoomIDs = await userService.getChatRoomIDs(email);
+        console.log(chatRoomIDs === null);
+        res.send(chatRoomIDs);
+    }
 };
