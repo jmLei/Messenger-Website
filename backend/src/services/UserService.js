@@ -1,6 +1,12 @@
 const client = require("../redis");
 
 module.exports = {
+
+    addChatroomID : async (email, chatroomID) => {
+        const key = email + "_chatroom_list";
+        client.sAdd(key, chatroomID);
+    },
+
     addUser : async (user) => {
         await client.set(user.email, user.name);
     },

@@ -13,7 +13,6 @@ module.exports = {
         // 1. list of chatroom IDs user is in
 
         const chatRoomIDs = await userService.getChatRoomIDs(email);
-        console.log(chatRoomIDs === null);
         res.send(chatRoomIDs);
     }
 };
