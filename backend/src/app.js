@@ -9,12 +9,8 @@ app.use(bodyParser.json());
 const chatroomRoute = require("./routes/ChatroomRoute");
 const userRoute = require("./routes/UserRoute");
 
-console.log(typeof chatroomRoute);
-console.log(typeof userRoute);
-
-
-// app.use("/user", userRoute);
-// app.use("/chatroom", chatroomRoute);
+app.use("/user", userRoute);
+app.use("/chatroom", chatroomRoute);
 
 app.listen(8080, () => {
     console.log("Server running on port 8080.");
