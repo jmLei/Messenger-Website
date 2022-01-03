@@ -1,10 +1,13 @@
+import ChatTabs from "./components/ChatTabs";
 import Messenger from "./components/Messenger";
+import NavigationBar from "./components/NavigationBar";
 
 function App() {
     return (
         <div>
-            <Messenger/>
-        </div>
+			<NavigationBar/>
+			<ChatTabs/>
+		</div>
   );
 }
 
