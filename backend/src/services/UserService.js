@@ -8,12 +8,13 @@ module.exports = {
     },
 
     addUser : async (user) => {
+        console.log("UserService.addUser()");
         await client.set(user.email, user.name);
     },
 
     getChatRoomIDs : async (email) => {
         const key = email + "_chatroom_list";
-        const chatRoomIDs = await client.get(key);
+        const chatRoomIDs = await client.SMEMBERS(key);
         return chatRoomIDs;
     },
 
@@ -21,4 +22,9 @@ module.exports = {
         const user = await client.get(email);
         return user;
     },
+
+    getUserExists : async (email) => {
+        const userExists = await client.EXISTS(email);
+        return userExists;
+    }
 }

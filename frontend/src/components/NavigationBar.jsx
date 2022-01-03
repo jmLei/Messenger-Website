@@ -8,14 +8,14 @@ import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
-import InputBase from "@mui/material/InputBase";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import TextField from "@mui/material/TextField";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
-const NavigationBar = () => {
+const NavigationBar = (props) => {
 	return(
 			<React.Fragment>
 				<Box sx={{ flexGrow: 1 }}>
@@ -41,7 +41,7 @@ const NavigationBar = () => {
 										</IconButton>
 									</MenuItem>
 									<MenuItem>
-										<GoogleLoginComponent/>
+										<GoogleLoginComponent getLoginData={props.getLoginData}/>
 									</MenuItem>
 								</Box>
 							</Toolbar>

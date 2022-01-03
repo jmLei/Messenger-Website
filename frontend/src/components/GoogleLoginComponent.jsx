@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 
-const GoogleLoginComponent = () => {
+const GoogleLoginComponent = (props) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -22,6 +22,17 @@ const GoogleLoginComponent = () => {
         setEmail("");
         setIsLoggedIn(false);
     }
+    
+    useEffect(() => {
+        console.log("GoogleLoginComponent.useEffect()");
+        const loginData = {
+            "isLoggedIn": isLoggedIn,
+            "name": name,
+            "email": email
+        }
+        console.log(loginData);
+        props.getLoginData(loginData);
+    }, [isLoggedIn]);
 
     return(
         <React.Fragment>
