@@ -9,6 +9,13 @@ import "./App.css";
 
 import axios from "axios";
 
+
+// { email } => { name }
+// {email}_chatroomIDs = [ list of chatrooms user with {email} belongs to ]
+// chatroomIDs = [ list of all chatroom IDs in the form { email1 }_{ email2 } ]
+// {chatroomID} = [ list of messageIDs ]
+// { messageID } = { text, time, sender }
+
 function App() {
 
     const getLoginData = (loginData) => {
