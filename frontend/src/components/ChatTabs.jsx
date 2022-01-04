@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 
 const ChatTabs = () => {
 	return(
-		<Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+		<Box sx={{  width: '100%', bgcolor: 'background.paper' }}>
 			<List>
                 <ListItem>
 					<ListItemButton>

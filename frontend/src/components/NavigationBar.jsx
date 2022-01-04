@@ -19,7 +19,9 @@ const NavigationBar = (props) => {
 	return(
 			<React.Fragment>
 				<Box sx={{ flexGrow: 1 }}>
-					<AppBar position="static">
+					<AppBar position="fixed"
+                        style={{ height:"10%" }}
+                    >
 						<Container maxWidth="xl">
 							<Toolbar disableGutters>
 								<Typography

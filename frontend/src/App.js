@@ -1,9 +1,10 @@
 import ChatTabs from "./components/ChatTabs";
 import NavigationBar from "./components/NavigationBar";
+import TextField from "@mui/material/TextField";
+
+import "./App.css";
 
 import axios from "axios";
-
-const api = require("./api/api");
 
 function App() {
 
@@ -23,8 +24,15 @@ function App() {
 
     return (
         <div>
-			<NavigationBar getLoginData={getLoginData}/>
-			<ChatTabs/>
+		    <NavigationBar getLoginData={getLoginData}/>
+            <div className="appPanel">
+                <div className="leftPanel">
+		    	    <ChatTabs/>
+                </div>
+                <div className="rightPanel">
+                    Right Panel here
+                </div>
+            </div>
 		</div>
   );
 }
