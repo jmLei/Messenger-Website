@@ -10,5 +10,12 @@
 
 .rightPanel {
     flex-grow: 1;
+}
+
+#chatControls {
+    height: 15vh;
+}
+#messageList {
+    height: 70vh;
     overflow-y: scroll;
 }

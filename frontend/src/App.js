@@ -1,7 +1,9 @@
 import ChatTabs from "./components/ChatTabs";
 import NavigationBar from "./components/NavigationBar";
-import TextField from "@mui/material/TextField";
 
+import AppBar from "@mui/material/AppBar";
+import TextField from "@mui/material/TextField";
+import Toolbar from "@mui/material/Toolbar";
 import "./App.css";
 
 import axios from "axios";
@@ -30,7 +32,16 @@ function App() {
 		    	    <ChatTabs/>
                 </div>
                 <div className="rightPanel">
-                    Right Panel here
+                    <div id="messageList">
+                        <h1>Message List</h1>
+                    </div>
+                    <div id="chatControls">
+                        <AppBar position="static" color="primary" sx={{top: 'auto', buttom: 0}}>
+                            <Toolbar>
+                                <TextField labelHidden variant="filled" />
+                            </Toolbar>
+                        </AppBar>
+                    </div>
                 </div>
             </div>
 		</div>
