@@ -1,6 +1,7 @@
 import ChatTabs from "./components/ChatTabs";
+import Messenger from "./components/Messenger";
 import NavigationBar from "./components/NavigationBar";
-
+import UserInterface from "./components/UserInterface";
 import AppBar from "@mui/material/AppBar";
 import TextField from "@mui/material/TextField";
 import Toolbar from "@mui/material/Toolbar";
@@ -15,8 +16,9 @@ function App() {
         console.log(loginData);
         if(loginData.isLoggedIn) {
             // set up page
-            axios.post("localhost:8080/user/signin", {
-                email: loginData.email
+            axios.post("127.0.0.1:8080/user/signin", {
+                email: loginData.email,
+                name: loginData.name
             }).then(res => {
                 console.log(res);
                 console.log(res.data);
@@ -32,16 +34,7 @@ function App() {
 		    	    <ChatTabs/>
                 </div>
                 <div className="rightPanel">
-                    <div id="messageList">
-                        <h1>Message List</h1>
-                    </div>
-                    <div id="chatControls">
-                        <AppBar position="static" color="primary" sx={{top: 'auto', buttom: 0}}>
-                            <Toolbar>
-                                <TextField labelHidden variant="filled" />
-                            </Toolbar>
-                        </AppBar>
-                    </div>
+                    <Messenger/>
                 </div>
             </div>
 		</div>

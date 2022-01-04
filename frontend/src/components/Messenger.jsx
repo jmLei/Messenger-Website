@@ -1,7 +1,12 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 
-import Stack from '@mui/material/Stack';
+import Avatar from "@mui/material/Avatar";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemText from "@mui/material/ListItemText";
 import TextField from '@mui/material/TextField';
+import Typography from "@mui/material/Typography";
 
 import GoogleLoginComponent from "./GoogleLoginComponent";
 import MessageBubble from "./MessageBubble";
@@ -29,34 +34,16 @@ const Messenger = () => {
                 sender: "Andrew Shinjo",
                 time: time
             }
-            setMessageBubbles(messageBubbles => [...messageBubbles, messageBubble]);
+            setMessageBubbles(messageBubbles => 
+                [...messageBubbles, messageBubble]);
         }
     }, [time]);
 
-
     return(
-        <div className="messengerContainer">
-            <Stack spacing={1}>
-                <GoogleLoginComponent/>
-                <TextField id="outlined-basic" label="Search for users" variant="outlined" />
-            </Stack>
-            
-
-            <div className="rightPanel">
-                <div className="messageBubbleContainer">
-                    {
-                        (messageBubbles.length === 0) ?
-                        <p>Empty chatroom</p> :
-                        messageBubbles.map(messageBubble => <MessageBubble messageBubble={messageBubble}/>)
-                    }
-                </div>
-
-                <UserInterface
-                    message={message}
-                    handleInputChange={handleInputChange}
-                    handleClick={handleClick}
-                />
-            </div>
+        <div>
+            <List>
+            </List>
+            <UserInterface/>
         </div>
     )
 };
