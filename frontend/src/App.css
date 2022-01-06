@@ -1,13 +1,15 @@
 .appPanel {
     display: flex;
-    height: 85vh;
+    height: 90vh;
     margin-top: 5%;
 }
 
 .leftPanel {
     overflow-y: scroll;
+    height: 100%;
 }
 
 .rightPanel {
     flex-grow: 1;
+    height: 100%;
 }

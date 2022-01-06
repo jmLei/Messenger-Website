@@ -18,10 +18,8 @@ import Typography from "@mui/material/Typography";
 const NavigationBar = (props) => {
 	return(
 			<React.Fragment>
-				<Box sx={{ flexGrow: 1 }}>
-					<AppBar position="fixed"
-                        style={{ height:"10%" }}
-                    >
+				<Box>
+					<AppBar>
 						<Container maxWidth="xl">
 							<Toolbar disableGutters>
 								<Typography
