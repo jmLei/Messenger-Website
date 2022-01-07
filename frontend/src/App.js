@@ -83,6 +83,7 @@ function App() {
     const chatTabsActive = useMediaQuery('(min-width: 1280px)');
 
     const messagesEndRef = useRef(null);
+    let textFieldInputRef = useRef(null);
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth"  });
@@ -102,6 +103,8 @@ function App() {
                     text: textFieldInput
                 }
             ]);
+            
+            textFieldInputRef.current.value = "";
         }
     }
 
@@ -184,6 +187,7 @@ function App() {
                         <Toolbar>
                             <TextField  
                                 fullWidth
+                                inputRef={textFieldInputRef}
                                 margin="normal"
                                 maxRows={4}
                                 multiline
