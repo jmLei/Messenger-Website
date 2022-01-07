@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import chatTabsSampleData from "./components/sampledata/ChatTabsSampleData";
 
@@ -167,6 +167,7 @@ function App() {
                 <Grid item xs={12} sm={12} mg={12} lg={9}>
                     <Box
                         sx = {{
+                            marginTop: "10vh",
                             maxHeight: "90vh",
                             width: "100%",
                             bgcolor: "background.paper",
