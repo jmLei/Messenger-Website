@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import chatTabsSampleData from "./components/sampledata/ChatTabsSampleData";
 
@@ -86,6 +86,12 @@ function App() {
 
     const chatTabsActive = useMediaQuery('(min-width: 1280px)');
 
+    const messagesEndRef = useRef(null);
+
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth"  });
+    }, [messageHistory]);
+
     const onChangeHandler = (event) => {
         setTextFieldInput(event.target.value);
     };
@@ -109,7 +115,7 @@ function App() {
         console.log(loginData);
         if(loginData.isLoggedIn) {
             // set up page
-            axios.post("127.0.0.1:8080/user/signin", {
+            axios.post("http://localhost:8080/user/signin", {
                 email: loginData.email,
                 name: loginData.name
             }).then(res => {
@@ -155,52 +161,48 @@ function App() {
                                                         </React.Fragment>
                                                     }      
                                                 />
-                                            <Divider/>
+                                                <Divider/>
                                             </ListItemButton>
                                         </ListItem>
                                     )
                             })}
                         </List>
                     }
-                    
                 </Grid>
                 <Grid item xs={12} sm={12} mg={12} lg={9}>
                     <Box
                         sx = {{
-                            marginTop: "10vh",
-                            maxHeight: "90vh",
+                            marginTop: "15vh",
+                            maxHeight: "70vh",
                             width: "100%",
                             bgcolor: "background.paper",
                             overflow: "auto"
                         }}
                     >
                         <Messenger messageHistory={messageHistory}/>
-                        <Appbar position="fixed"
-                            sx={{
-                                backgroundColor: 'gray',
-                                bottom: 0,
-                                top: 'auto',
-                                width:"75%"
-                            }}
-                            
-                        >
-                            <Toolbar>
-                                <TextField  
-                                    fullWidth
-                                    margin="normal"
-                                    maxRows={6}
-                                    multiline
-                                    size="small"
-                                    onChange={onChangeHandler}
-                                />
-                                <Button variant="contained"
-                                    onClick={onClickHandler}
-                                >
-                                    Send
-                                </Button>
-                            </Toolbar>
-                        </Appbar>
-                    </Box>
+                        <div ref={messagesEndRef}/>
+                    </Box>                
+                    <Appbar
+                        sx = {{
+                            top: "auto", bottom: 0, width: "75%"
+                        }}
+                    >
+                        <Toolbar>
+                            <TextField  
+                                fullWidth
+                                margin="normal"
+                                maxRows={4}
+                                multiline
+                                size="small"
+                                onChange={onChangeHandler}
+                            />
+                            <Button variant="contained"
+                                onClick={onClickHandler}
+                            >
+                                Send
+                            </Button>
+                        </Toolbar>
+                    </Appbar>
                 </Grid>
             </Grid> 
         </div>
