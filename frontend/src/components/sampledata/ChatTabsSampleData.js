@@ -16,67 +16,6 @@ const chatTabsSampleData = [
         "name": "Sandy Squirrel",
         "message": "Hello"
     } ,
-    
-    {
-        "avatar": "SS",
-        "name": "Sandy Squirrel",
-        "message": "Hello"
-    } ,
-
-
-    {
-        "avatar": "SS",
-        "name": "Sandy Squirrel",
-        "message": "Hello"
-    } ,
-
-
-    {
-        "avatar": "SS",
-        "name": "Sandy Squirrel",
-        "message": "Hello"
-    } ,
-
-    {
-        "avatar": "SS",
-        "name": "Sandy Squirrel",
-        "message": "Hello"
-    } ,
-
-
-    {
-        "avatar": "SS",
-        "name": "Sandy Squirrel",
-        "message": "Hello"
-    } ,
-
-
-    {
-        "avatar": "SS",
-        "name": "Sandy Squirrel",
-        "message": "Hello"
-    } ,
-
-
-    {
-        "avatar": "SS",
-        "name": "Sandy Squirrel",
-        "message": "Hello"
-    } ,
-
-
-    {
-        "avatar": "SS",
-        "name": "Sandy Squirrel",
-        "message": "Hello"
-    } ,
-
-
-    {
-        "avatar": "SS",
-        "name": "Sandy Squirrel",
-        "message": "Hello"
-    } ,
 ];
 
 export default chatTabsSampleData;

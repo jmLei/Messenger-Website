@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import chatTabsSampleData from "./components/sampledata/ChatTabsSampleData";
 
@@ -7,9 +7,10 @@ import Messenger from "./components/Messenger";
 import NavigationBar from "./components/NavigationBar";
 import UserInterface from "./components/UserInterface";
 
-import AppBar from "@mui/material/AppBar";
+import Appbar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import {Container} from "@material-ui/core";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
@@ -80,7 +81,28 @@ const messages = {
 }
 
 function App() {
+    const [textFieldInput, setTextFieldInput] = useState("");
+    const [messageHistory, setMessageHistory] = useState([]);
+
     const chatTabsActive = useMediaQuery('(min-width: 1280px)');
+
+    const onChangeHandler = (event) => {
+        setTextFieldInput(event.target.value);
+    };
+    
+    const onClickHandler = () => {
+        console.log("onClick()");
+        if(textFieldInput.length > 0) {
+            setMessageHistory(messageHistory => [...messageHistory,
+                {
+                    avatar: "AS", 
+                    sender: "Andrew Shinjo",
+                    time: "[12:54] Dec. 1, 2021",
+                    text: textFieldInput
+                }
+            ]);
+        }
+    }
 
     const getLoginData = (loginData) => {
         console.log("App().getLoginData()");
@@ -99,13 +121,15 @@ function App() {
 
     return (
         <div>
+            <NavigationBar getLoginData={getLoginData}/>
             <Grid container>
                 <Grid item lg={3}>
                     {
                         chatTabsActive && 
                         <List
                             sx = {{
-                                maxHeight: "100vh",
+                                marginTop: "10vh",
+                                maxHeight: "85vh",
                                 width: "100%",
                                 bgcolor: "background.paper",
                                 overflow: "auto",
@@ -114,7 +138,7 @@ function App() {
                         >
                             {chatTabsSampleData.map( (chatTab) => {
                                     return (
-                                        <ListItem>
+                                        <ListItem key={chatTab.name} >
                                             <ListItemButton>
                                                 <ListItemAvatar>
                                                     <Avatar>{chatTab.avatar}</Avatar>
@@ -128,7 +152,7 @@ function App() {
                                                             >
                                                                 {chatTab.message}
                                                             </Typography>
-                                                            </React.Fragment>
+                                                        </React.Fragment>
                                                     }      
                                                 />
                                             <Divider/>
@@ -149,12 +173,33 @@ function App() {
                             overflow: "auto"
                         }}
                     >
-                        
+                        <Messenger messageHistory={messageHistory}/>
+                        <Appbar position="fixed"
+                            sx={{
+                                backgroundColor: 'gray',
+                                bottom: 0,
+                                top: 'auto',
+                                width:"75%"
+                            }}
+                            
+                        >
+                            <Toolbar>
+                                <TextField  
+                                    fullWidth
+                                    margin="normal"
+                                    maxRows={6}
+                                    multiline
+                                    size="small"
+                                    onChange={onChangeHandler}
+                                />
+                                <Button variant="contained"
+                                    onClick={onClickHandler}
+                                >
+                                    Send
+                                </Button>
+                            </Toolbar>
+                        </Appbar>
                     </Box>
-                    <TextField
-                        multiline
-                        maxRows={8}
-                    />
                 </Grid>
             </Grid> 
         </div>

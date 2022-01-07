@@ -1,5 +1,5 @@
 import React from "react";
-
+import Avatar from "@mui/material/Avatar";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
@@ -17,21 +17,19 @@ const Message = (props) => {
         <React.Fragment>
             <ListItem>
                 <ListItemAvatar>
-                    <Avatar></Avatar>
+                    <Avatar>{props.message.avatar}</Avatar>
                 </ListItemAvatar>
                 <ListItemText
                     primary = {
-                        <React.Fragment>
-                            <Typography variant="caption">{props.time}</Typography>
-                        </React.Fragment>
+                        <Typography variant="caption">{props.message.time}</Typography>
                     }
                     secondary = {
-                        <React.Fragment>
-                            <Typography variant="body1">{props.message}</Typography>
-                        </React.Fragment>
+                        <Typography variant="body1">{props.message.text}</Typography>
                     }   
                 />
             </ListItem>
         </React.Fragment>
     )
 }
+
+export default Message;
