@@ -17,38 +17,27 @@ import Typography from "@mui/material/Typography";
 
 const NavigationBar = (props) => {
 	return(
-			<React.Fragment>
-				<Box>
-					<AppBar>
-						<Container maxWidth="xl">
-							<Toolbar disableGutters>
-								<Typography
-									variant="h6"
-									components="div"
-									sx={{ flexGrow: 1 }}
-								>
-									MESSENGER
-								</Typography>
-								<Box sx={{ display: { xs: "none", md: "flex" } }}>
-									<MenuItem>
-										<IconButton
-											size="large"
-											color="inherit"
-										>
-											<Badge badgeContent={17} color="error">
-												<NotificationsIcon/>
-											</Badge>
-										</IconButton>
-									</MenuItem>
-									<MenuItem>
-										<GoogleLoginComponent getLoginData={props.getLoginData}/>
-									</MenuItem>
-								</Box>
-							</Toolbar>
-						</Container>
-					</AppBar>
-				</Box>
-			</React.Fragment>
+        <AppBar position="static">
+            <Container maxWidth="xl">
+                <Toolbar disableGutters>
+                    <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                        MESSENGER
+                    </Typography>
+                    <Box sx={{ display: { xs: "none", md: "flex" } }}>
+                        <MenuItem>
+                            <IconButton size="large" color="inherit">
+                                <Badge badgeContent={17} color="error">
+                                    <NotificationsIcon/>
+                                </Badge>
+                            </IconButton>
+                        </MenuItem>
+                        <MenuItem>
+                            <GoogleLoginComponent getLoginData={props.getLoginData}/>
+                        </MenuItem>
+                    </Box>
+                </Toolbar>
+            </Container>
+        </AppBar>
 	);
 };
 

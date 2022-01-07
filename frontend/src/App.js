@@ -93,7 +93,6 @@ function App() {
     };
     
     const onClickHandler = () => {
-        console.log("onClick()");
         if(textFieldInput.length > 0) {
             setMessageHistory(messageHistory => [...messageHistory,
                 {
@@ -123,15 +122,13 @@ function App() {
 
     return (
         <div>
-            <NavigationBar getLoginData={getLoginData}/>
             <Grid container>
                 <Grid item lg={3}>
                     {
                         chatTabsActive && 
                         <List
                             sx = {{
-                                marginTop: "10vh",
-                                maxHeight: "85vh",
+                                height: "100vh",
                                 width: "100%",
                                 bgcolor: "background.paper",
                                 overflow: "auto",
@@ -166,11 +163,11 @@ function App() {
                     }
                 </Grid>
                 <Grid item xs={12} sm={12} mg={12} lg={9}>
+                    <NavigationBar getLoginData={getLoginData} />
                     <Box
                         sx = {{
-                            marginTop: "15vh",
+                            minHeight: "70vh",
                             maxHeight: "70vh",
-                            width: "100%",
                             bgcolor: "background.paper",
                             overflow: "auto"
                         }}
@@ -179,8 +176,9 @@ function App() {
                         <div ref={messagesEndRef}/>
                     </Box>                
                     <Appbar
+                        position="static"
                         sx = {{
-                            top: "auto", bottom: 0, width: "75%"
+                            top: "auto", bottom: 0
                         }}
                     >
                         <Toolbar>
@@ -192,7 +190,9 @@ function App() {
                                 size="small"
                                 onChange={onChangeHandler}
                             />
-                            <Button variant="contained"
+                            <Button
+                                color="secondary"
+                                variant="contained"
                                 onClick={onClickHandler}
                             >
                                 Send
