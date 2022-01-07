@@ -2,16 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 
 import chatTabsSampleData from "./components/sampledata/ChatTabsSampleData";
 
-import ChatTabs from "./components/ChatTabs";
 import Messenger from "./components/Messenger";
 import NavigationBar from "./components/NavigationBar";
-import UserInterface from "./components/UserInterface";
 
 import Appbar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import {Container} from "@material-ui/core";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
@@ -19,12 +16,11 @@ import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import Paper from "@mui/material/Paper";
+
 import TextField from "@mui/material/TextField";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { useTheme } from "@mui/material/styles";
 
 import "./App.css";
 
