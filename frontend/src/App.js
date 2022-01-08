@@ -2,21 +2,25 @@ import React, { useEffect, useRef, useState } from "react";
 
 import chatTabsSampleData from "./components/sampledata/ChatTabsSampleData";
 
+import ChatTab from "./components/ChatTab";
+import Main from "./components/Main";
 import Messenger from "./components/Messenger";
 import NavigationBar from "./components/NavigationBar";
 
-import Appbar from "@mui/material/AppBar";
+import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
 import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
 import TextField from "@mui/material/TextField";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -33,57 +37,16 @@ import axios from "axios";
 // {chatroomID} = [ list of messageIDs ]
 // { messageID } = { text, time, sender }
 
-const sampleChatroomIDs = [
-    "shinjo1233@gmail.com_shinjo1233@gmail.com",
-    "john_smith@gmail.com_shinjo1233@gmail.com",
-    "bob_lee@gmail.com_shinjo1233@gmail.com",
-    "shinjo1233@gmail.com_victorKim@gmail.com"
-]
-
-const sampleChatrooms = {
-        "shinjo1233@gmail.com_shinjo1233@gmail.com": [
-            "shinjo1233@gmail.com_shinjo1233@gmail.com_msg_shinjo1233@gmail.com_1",
-            "shinjo1233@gmail.com_shinjo1233@gmail.com_msg_shinjo1233@gmail.com_2",
-            "shinjo1233@gmail.com_shinjo1233@gmail.com_msg_shinjo1233@gmail.com_3"
-        ],
-        "john_smith@gmail.com_shinjo1233@gmail.com": [
-            "john_smith@gmail.com_shinjo1233@gmail.com_msg_john_smith@gmail.com_1",
-            "john_smith@gmail.com_shinjo1233@gmail.com_msg_shinjo1233@gmail.com_2",
-            "john_smith@gmail.com_shinjo1233@gmail.com_msg_john_smith@gmail.com_3"
-        ],
-        "bob_lee@gmail.com_shinjo1233@gmail.com": [
-            "bob_lee@gmail.com_shinjo1233@gmail.com_msg_bob_lee@gmail.com_1",
-        ],
-        "shinjo1233@gmail.com_victorKim@gmail.com": [
-            "shinjo1233@gmail.com_victorKim@gmail.com_msg_shinjo1233@gmail.com_1",
-            "shinjo1233@gmail.com_victorKim@gmail.com_msg_victorKim@gmail.com_2"
-        ]
-}
-
-const messages = {
-    "shinjo1233@gmail.com_shinjo1233@gmail.com_msg_shinjo1233@gmail.com_1": {
-        "sender": "shinjo1233@gmail.com",
-        "text": "This is a test.",
-        "time": "Jan. 4, 2021 2:01PM"
-    },
-
-    "shinjo1233@gmail.com_shinjo1233@gmail.com_msg_shinjo1233@gmail.com_2": {
-        "sender": "shinjo1233@gmail.com",
-        "text": "Hello.",
-        "time": "Jan. 4, 2021 2:03PM"
-    },
-
-
-}
-
 function App() {
+    const [ userProfile, setUserProfile ] = useState({ email: "", name: "" });
+    const [ chatrooms, setChatrooms ] = useState([]);
     const [textFieldInput, setTextFieldInput] = useState("");
     const [messageHistory, setMessageHistory] = useState([]);
 
     const chatTabsActive = useMediaQuery('(min-width: 1280px)');
 
     const messagesEndRef = useRef(null);
-    let textFieldInputRef = useRef(null);
+    const textFieldInputRef = useRef(null);
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth"  });
@@ -125,7 +88,10 @@ function App() {
 
     return (
         <div>
-            <Grid container>
+            <Main />
+        {/*
+        <div>
+            <Grid container sx={{ maxHeight: "100vh" }}>
                 <Grid item lg={3}>
                     {
                         chatTabsActive && 
@@ -139,72 +105,49 @@ function App() {
                             }}
                         >
                             {chatTabsSampleData.map( (chatTab) => {
-                                    return (
-                                        <ListItem key={chatTab.name} >
-                                            <ListItemButton>
-                                                <ListItemAvatar>
-                                                    <Avatar>{chatTab.avatar}</Avatar>
-                                                </ListItemAvatar>
-                                                <ListItemText
-                                                    primary={chatTab.name}
-                                                    secondary = {
-                                                        <React.Fragment>
-                                                            <Typography
-                                                                variant="caption"
-                                                            >
-                                                                {chatTab.message}
-                                                            </Typography>
-                                                        </React.Fragment>
-                                                    }      
-                                                />
-                                                <Divider/>
-                                            </ListItemButton>
-                                        </ListItem>
-                                    )
+								return (<ChatTab chatTab={chatTab}/>)
                             })}
                         </List>
                     }
                 </Grid>
                 <Grid item xs={12} sm={12} mg={12} lg={9}>
-                    <NavigationBar getLoginData={getLoginData} />
                     <Box
                         sx = {{
-                            minHeight: "70vh",
-                            maxHeight: "70vh",
                             bgcolor: "background.paper",
+                            maxHeight: "85vh",
                             overflow: "auto"
                         }}
                     >
+                        <NavigationBar getLoginData={getLoginData}/>
                         <Messenger messageHistory={messageHistory}/>
                         <div ref={messagesEndRef}/>
                     </Box>                
-                    <Appbar
-                        position="static"
+                    <Box
                         sx = {{
                             top: "auto", bottom: 0
                         }}
                     >
-                        <Toolbar>
-                            <TextField  
-                                fullWidth
-                                inputRef={textFieldInputRef}
-                                margin="normal"
-                                maxRows={4}
-                                multiline
-                                size="small"
-                                onChange={onChangeHandler}
-                            />
-                            <Button
-                                color="secondary"
-                                variant="contained"
-                                onClick={onClickHandler}
-                            >
-                                Send
-                            </Button>
-                        </Toolbar>
-                    </Appbar>
+                        <TextField  
+                            fullWidth
+                            inputRef={textFieldInputRef}
+                            margin="normal"
+                            maxRows={4}
+                            multiline
+                            size="small"
+                            onChange={onChangeHandler}
+                        />
+                        <Button
+                            color="secondary"
+                            variant="contained"
+                            onClick={onClickHandler}
+                        >
+                            Send
+                        </Button>
+                    </Box>
                 </Grid>
             </Grid> 
+        </div>
+        */}
         </div>
     );
 }
