@@ -12,46 +12,75 @@ import Toolbar from "@mui/material/Toolbar";
 
 import { makeStyles } from "@material-ui/core";
 
-const drawerAppBarHeight = 70;
-const drawerWidth = 360;
-
-const useStyles = makeStyles({
-    appBar: {
-        height: drawerAppBarHeight,
-    },
-
-    drawer: {
-        position: 'static',
-        width: drawerWidth
-    },
-
-    drawerPaper: {
-        width: drawerWidth
-    },
-
-    chatList: {
-        height: `calc(100% - ${drawerAppBarHeight} - ${drawerAppBarHeight}px)`,
-        width: '100%',
-        overflow: 'auto'
-    },
-
-    mainPanel: {
-    
-    }
-});
-
 const Main = () => {
+    // useState hooks
+    const [ render, setRender ] = useState(0);
+    const [ spacing, setSpacing ] = useState(0);
+
+    // useRef hooks
+    const appBarRef = useRef();
     const messengerPanelRef = useRef();
     const spacingPanelRef = useRef();
     const textFieldRef = useRef();
 
-    useEffect(() => {
-        console.log("Messenger Panel = " + messengerPanelRef.current.clientHeight);
-        console.log("Spacing Panel = " + spacingPanelRef.current.clientHeight);
-        console.log("Textfield = " + spacingPanelRef.current.clientHeight);
+    
+    // makeStyles hook
+    const drawerAppBarHeight = 70;
+    const drawerWidth = 360;
+
+    const useStyles = makeStyles({
+        appBar: {
+            height: drawerAppBarHeight,
+        },
+
+        drawer: {
+            position: 'static',
+            width: drawerWidth
+        },
+
+        drawerPaper: {
+            width: drawerWidth
+        },
+
+        chatList: {
+            height: `calc(100% - ${drawerAppBarHeight} - ${drawerAppBarHeight}px)`,
+            width: '100%',
+            overflow: 'auto'
+        },
+
+        mainPanel: {
+            flexGrow: 1,
+        },
+
+        spacingPanel: {
+            height: `calc(100vh - ${spacing}px)`
+        }
     });
-        
+
     const classes = useStyles();
+
+    // useEffect hooks
+    useEffect(() => {
+        textFieldOnChangeHandler();
+    });
+
+    useEffect(() => {
+        console.log("useEffect()");
+        console.log("Spacing variable = " + spacing);
+    }, [spacing])
+    
+    // additional functions
+
+    const textFieldOnChangeHandler = () => {
+        console.log(appBarRef.current.scrollHeight);
+        console.log(messengerPanelRef.current.scrollHeight);
+        console.log(textFieldRef.current.scrollHeight);
+        setSpacing(
+            appBarRef.current.scrollHeight +
+            messengerPanelRef.current.scrollHeight +
+            textFieldRef.current.scrollHeight
+        );
+    };
 
     return(
         <Box sx={{display: "flex"}}>
@@ -84,11 +113,9 @@ const Main = () => {
                 </List>
             </Drawer>
 
-            <Box sx={{ flexGrow: 1}}>
+            <Box className={classes.mainPanel}>
                 <Box sx={{display: "flex",  flexDirection: "column"}}>
-                    <AppBar
-                        position="static"
-                    >
+                    <AppBar position="static" ref={appBarRef}>
                         <Toolbar>
                             Toolbar 3
                         </Toolbar>
@@ -97,12 +124,19 @@ const Main = () => {
                         Message Panel
                     </Box>
                         
-                    <Box ref={spacingPanelRef}>
-                        Spacing
+                    <Box className={classes.spacingPanel} ref={spacingPanelRef}>
+                    
                     </Box>
 
-                    <Box ref={textFieldRef}>
-                        Textfield
+                    <Box ref={textFieldRef} sx={{ position: "relative" }}>
+                        <TextField
+                            multiline
+                            maxRows={4}
+                            onChange={textFieldOnChangeHandler}
+                            margin="dense"
+                            size="small"
+                            sx={{ position: "absolute", bottom: 0 }}
+                        />
                     </Box>
                 </Box>
             </Box>
