@@ -1,5 +1,3 @@
-import React, { useEffect, useRef, useState } from "react";
-
 import Main from "./components/Main";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";

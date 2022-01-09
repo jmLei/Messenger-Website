@@ -4,10 +4,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
-import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
 import TextField from "@mui/material/TextField";
 import Toolbar from "@mui/material/Toolbar";
 
@@ -33,7 +30,7 @@ const Main = () => {
             height: drawerAppBarHeight,
         },
 
-        drawer: {
+        permanentDrawer: {
             position: 'static',
             width: drawerWidth
         },
@@ -50,6 +47,11 @@ const Main = () => {
 
         spacingPanel: {
             height: `calc(100vh - ${spacing}px)`
+        },
+
+        temporaryDrawer: {
+            position: "absolute",
+            width: drawerWidth
         }
     });
 
@@ -71,37 +73,59 @@ const Main = () => {
         );
     };
 
+    
+    const drawer = (
+        <div>
+            <AppBar
+                className={classes.appBar}
+                color="secondary"
+                position="static"
+            >
+                <Toolbar>
+                    Toolbar 1
+                </Toolbar>
+            </AppBar>
+            <AppBar
+                className={classes.appBar}
+                color="secondary"
+                position="static"
+            >
+                <Toolbar>
+                    Toolbar 2
+                </Toolbar>
+            </AppBar>
+            <List
+                className={classes.chatList}
+            >
+            </List>
+        </div>
+    );
+
     return(
         <Box sx={{display: "flex"}}>
             <Drawer
-                className={classes.drawer}
+                className={classes.temporaryDrawer}
+                classes={{paper: classes.drawerPaper}}
+                anchor="left"
+                open={true}
+                sx={{ 
+                    display: { sx: "block", sm: "block", md: "block", lg: "none", xl: "none" } 
+                }}
+                variant="temporary"
+            >
+                {drawer}
+            </Drawer>
+            <Drawer
+                className={classes.permanentDrawer}
                 classes={{ paper: classes.drawerPaper }}
                 anchor="left"
                 open={true}
+                sx={{
+                    display: { xs: "none", sm: "none", md: "none", lg: "block", xl: "block" }
+                }}
                 variant="permanent"
             >
-                <AppBar
-                    className={classes.appBar}
-                    color="secondary"
-                    position="static"
-                >
-                    <Toolbar>
-                        Toolbar 1
-                    </Toolbar>
-                </AppBar>
-                <AppBar
-                    className={classes.appBar}
-                    color="secondary"
-                    position="static"
-                >
-                    <Toolbar>
-                        Toolbar 2
-                    </Toolbar>
-                </AppBar>
-                <List
-                    className={classes.chatList}
-                >
-                </List>
+                {drawer}
             </Drawer>
 
             <Box sx={{ flexGrow: 1 }}>
