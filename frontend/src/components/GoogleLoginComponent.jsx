@@ -1,15 +1,13 @@
 import React, {useEffect, useState} from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 
-const GoogleLoginComponent = (props) => {
+const GoogleLoginComponent = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
 
     const onSuccessHandler = (response) => {
-        setName(response.profileObj.name);
-        setEmail(response.profileObj.email);
-        setIsLoggedIn(true);
+    
     };
 
     const onFailureHandler = (response) => {
@@ -31,7 +29,6 @@ const GoogleLoginComponent = (props) => {
             "email": email
         }
         console.log(loginData);
-        props.getLoginData(loginData);
     }, [isLoggedIn]);
 
     return(
@@ -46,7 +43,7 @@ const GoogleLoginComponent = (props) => {
                 ) : (
                     <GoogleLogin
                         clientId={process.env.REACT_APP_CLIENT_ID}
-                        buttonText="Sign In with Google"
+                        buttonText="Sign In"
                         onSuccess={onSuccessHandler}
                         onFailure={onFailureHandler}
                         isSignedIn={true}
