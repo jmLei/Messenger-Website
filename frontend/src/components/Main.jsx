@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
 import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
@@ -9,6 +10,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import TextField from "@mui/material/TextField";
 import Toolbar from "@mui/material/Toolbar";
+
+import SendIcon from "@mui/icons-material/Send";
 
 import { makeStyles } from "@material-ui/core";
 
@@ -114,15 +117,36 @@ const Main = () => {
                     
                     </Box>
 
-                    <Box ref={textFieldRef} sx={{ position: "relative" }}>
-                        <TextField
-                            multiline
-                            maxRows={4}
-                            onChange={textFieldOnChangeHandler}
-                            margin="dense"
-                            size="small"
-                            sx={{ position: "absolute", bottom: 0 }}
-                        />
+                    <Box ref={textFieldRef} sx={{ position: "relative", width: "100%" }}>
+                        <AppBar
+                            position="static"
+                            sx={{ 
+                                bottom: 0, 
+                                display: "flex",
+                                position: "absolute",
+                            }}
+                        >
+                            <Toolbar>
+                                <TextField
+                                    color="warning"
+                                    multiline
+                                    maxRows={4}
+                                    onChange={textFieldOnChangeHandler}
+                                    margin="dense"
+                                    size="small"
+                                    sx={{ flexGrow: 1 }}
+                                />
+                                <Button
+                                    endIcon={<SendIcon/>}
+                                    sx={{
+                                        alignSelf: "flex-end",
+                                        top: "-10px"
+                                    }}
+                                    variant="contained"
+                                >
+                                </Button>
+                            </Toolbar>
+                        </AppBar>
                     </Box>
                 </Box>
             </Box>
