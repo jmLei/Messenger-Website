@@ -3,11 +3,14 @@ import React, { useState, useEffect, useRef } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import TextField from "@mui/material/TextField";
 import Toolbar from "@mui/material/Toolbar";
 
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import CloseIcon from "@mui/icons-material/Close";
 import SendIcon from "@mui/icons-material/Send";
 
 import { makeStyles } from "@material-ui/core";
@@ -15,6 +18,7 @@ import { makeStyles } from "@material-ui/core";
 const Main = () => {
     // useState hooks
     const [ spacing, setSpacing ] = useState(0);
+    const [ tempDrawerOpen, setTempDrawerOpen ] = useState(false);
 
     // useRef hooks
     const appBarRef = useRef();
@@ -75,10 +79,9 @@ const Main = () => {
 
     
     const drawer = (
-        <div>
+        <Container>
             <AppBar
                 className={classes.appBar}
-                color="secondary"
                 position="static"
             >
                 <Toolbar>
@@ -87,32 +90,59 @@ const Main = () => {
             </AppBar>
             <AppBar
                 className={classes.appBar}
-                color="secondary"
                 position="static"
             >
                 <Toolbar>
-                    Toolbar 2
+                    <TextField 
+                        fullWidth
+                        label="Search"
+                        size="small"
+                        variant="filled"
+                    />
                 </Toolbar>
             </AppBar>
             <List
                 className={classes.chatList}
             >
             </List>
-        </div>
+        </Container>
     );
 
     return(
         <Box sx={{display: "flex"}}>
+            <Button
+                color="secondary"
+                startIcon={<ArrowForwardIosIcon/>}
+                sx={{
+                    position: "absolute",
+                    left: 0,
+                    top: 0,
+                    zIndex: 1
+                }}
+                onClick={() => setTempDrawerOpen(! tempDrawerOpen)}
+            >
+            </Button>
             <Drawer
                 className={classes.temporaryDrawer}
                 classes={{paper: classes.drawerPaper}}
                 anchor="left"
-                open={true}
+                open={tempDrawerOpen}
                 sx={{ 
                     display: { sx: "block", sm: "block", md: "block", lg: "none", xl: "none" } 
                 }}
                 variant="temporary"
             >
+                <Button
+                    color="secondary" 
+                    endIcon={<CloseIcon />}
+                    sx={{
+                        position: "absolute",
+                        right: 0,
+                        zIndex: 1
+                    }}
+                    onClick={() => setTempDrawerOpen(! tempDrawerOpen)}
+                >
+                </Button>
                 {drawer}
             </Drawer>
             <Drawer
@@ -129,57 +159,56 @@ const Main = () => {
             </Drawer>
 
             <Box sx={{ flexGrow: 1 }}>
-                <Box sx={{display: "flex",  flexDirection: "column"}}>
-                    <AppBar
-                        color="secondary"
-                        position="static"
-                        ref={appBarRef}
-                    >
-                        <Toolbar>
-                            Toolbar 3
-                        </Toolbar>
-                    </AppBar>
-                    <Box ref={messengerPanelRef}>
-                        Message Panel
-                    </Box>
-                        
-                    <Box className={classes.spacingPanel}>
-                    
-                    </Box>
-
-                    <Box ref={textFieldRef} sx={{ position: "relative", width: "100%" }}>
+                <Container>
+                    <Box sx={{display: "flex",  flexDirection: "column"}}>
                         <AppBar
-                            color="secondary"
                             position="static"
-                            sx={{ 
-                                bottom: 0, 
-                                display: "flex",
-                                position: "absolute",
-                            }}
+                            ref={appBarRef}
                         >
                             <Toolbar>
-                                <TextField
-                                    multiline
-                                    maxRows={4}
-                                    onChange={textFieldOnChangeHandler}
-                                    margin="dense"
-                                    size="small"
-                                    sx={{ flexGrow: 1 }}
-                                />
-                                <Button
-                                    color="secondary"
-                                    endIcon={<SendIcon/>}
-                                    sx={{
-                                        alignSelf: "flex-end",
-                                        top: "-10px"
-                                    }}
-                                    variant="contained"
-                                >
-                                </Button>
+                                Toolbar 3
                             </Toolbar>
                         </AppBar>
+                        <Box ref={messengerPanelRef}>
+                            Message Panel
+                        </Box>
+                            
+                        <Box className={classes.spacingPanel}>
+                        
+                        </Box>
+
+                        <Box ref={textFieldRef} sx={{ position: "relative", width: "100%" }}>
+                            <AppBar
+                                position="static"
+                                sx={{ 
+                                    bottom: 0, 
+                                    display: "flex",
+                                    position: "absolute",
+                                }}
+                            >
+                                <Toolbar>
+                                    <TextField
+                                        multiline
+                                        maxRows={4}
+                                        onChange={textFieldOnChangeHandler}
+                                        margin="dense"
+                                        size="small"
+                                        sx={{ flexGrow: 1 }}
+                                    />
+                                    <Button
+                                        endIcon={<SendIcon/>}
+                                        sx={{
+                                            alignSelf: "flex-end",
+                                            top: "-10px"
+                                        }}
+                                        variant="contained"
+                                    >
+                                    </Button>
+                                </Toolbar>
+                            </AppBar>
+                        </Box>
                     </Box>
-                </Box>
+                </Container>
             </Box>
         </Box>
     )

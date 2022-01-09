@@ -9,9 +9,6 @@ const theme = createTheme({
         primary: {
             main: "#FAFAFA"
         },
-        secondary: {
-            main: "#FAFAFA"
-        }
     }
 });
 
