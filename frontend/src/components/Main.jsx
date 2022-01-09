@@ -9,6 +9,7 @@ import Container from "@mui/material/Container";
 import Drawer from "@mui/material/Drawer";
 import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
+import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -170,7 +171,6 @@ const Main = () => {
             >
                 {drawer}
             </Drawer>
-
             <Box sx={{ flexGrow: 1 }}>
                 <Container>
                     <Box sx={{display: "flex",  flexDirection: "column"}}>
@@ -182,14 +182,10 @@ const Main = () => {
                                 Toolbar 3
                             </Toolbar>
                         </AppBar>
-                        <Box ref={messengerPanelRef}>
-                            Message Panel
-                        </Box>
-                            
-                        <Box className={classes.spacingPanel}>
-                        
-                        </Box>
-
+                        <Paper>
+                            <Box ref={messengerPanelRef}>Message Panel</Box>
+                            <Box className={classes.spacingPanel}></Box>
+                        </Paper>
                         <Box ref={textFieldRef} sx={{ position: "relative", width: "100%" }}>
                             <AppBar
                                 position="static"
