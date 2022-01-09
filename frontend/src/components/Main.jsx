@@ -82,6 +82,7 @@ const Main = () => {
             >
                 <AppBar
                     className={classes.appBar}
+                    color="secondary"
                     position="static"
                 >
                     <Toolbar>
@@ -90,6 +91,7 @@ const Main = () => {
                 </AppBar>
                 <AppBar
                     className={classes.appBar}
+                    color="secondary"
                     position="static"
                 >
                     <Toolbar>
@@ -104,7 +106,11 @@ const Main = () => {
 
             <Box sx={{ flexGrow: 1 }}>
                 <Box sx={{display: "flex",  flexDirection: "column"}}>
-                    <AppBar position="static" ref={appBarRef}>
+                    <AppBar
+                        color="secondary"
+                        position="static"
+                        ref={appBarRef}
+                    >
                         <Toolbar>
                             Toolbar 3
                         </Toolbar>
@@ -119,6 +125,7 @@ const Main = () => {
 
                     <Box ref={textFieldRef} sx={{ position: "relative", width: "100%" }}>
                         <AppBar
+                            color="secondary"
                             position="static"
                             sx={{ 
                                 bottom: 0, 
@@ -128,7 +135,6 @@ const Main = () => {
                         >
                             <Toolbar>
                                 <TextField
-                                    color="warning"
                                     multiline
                                     maxRows={4}
                                     onChange={textFieldOnChangeHandler}
@@ -137,6 +143,7 @@ const Main = () => {
                                     sx={{ flexGrow: 1 }}
                                 />
                                 <Button
+                                    color="secondary"
                                     endIcon={<SendIcon/>}
                                     sx={{
                                         alignSelf: "flex-end",
