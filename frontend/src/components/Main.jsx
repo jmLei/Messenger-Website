@@ -14,16 +14,13 @@ import { makeStyles } from "@material-ui/core";
 
 const Main = () => {
     // useState hooks
-    const [ render, setRender ] = useState(0);
     const [ spacing, setSpacing ] = useState(0);
 
     // useRef hooks
     const appBarRef = useRef();
     const messengerPanelRef = useRef();
-    const spacingPanelRef = useRef();
     const textFieldRef = useRef();
 
-    
     // makeStyles hook
     const drawerAppBarHeight = 70;
     const drawerWidth = 360;
@@ -48,10 +45,6 @@ const Main = () => {
             overflow: 'auto'
         },
 
-        mainPanel: {
-            flexGrow: 1,
-        },
-
         spacingPanel: {
             height: `calc(100vh - ${spacing}px)`
         }
@@ -60,21 +53,14 @@ const Main = () => {
     const classes = useStyles();
 
     // useEffect hooks
+
     useEffect(() => {
         textFieldOnChangeHandler();
     });
 
-    useEffect(() => {
-        console.log("useEffect()");
-        console.log("Spacing variable = " + spacing);
-    }, [spacing])
-    
     // additional functions
 
     const textFieldOnChangeHandler = () => {
-        console.log(appBarRef.current.scrollHeight);
-        console.log(messengerPanelRef.current.scrollHeight);
-        console.log(textFieldRef.current.scrollHeight);
         setSpacing(
             appBarRef.current.scrollHeight +
             messengerPanelRef.current.scrollHeight +
@@ -113,7 +99,7 @@ const Main = () => {
                 </List>
             </Drawer>
 
-            <Box className={classes.mainPanel}>
+            <Box sx={{ flexGrow: 1 }}>
                 <Box sx={{display: "flex",  flexDirection: "column"}}>
                     <AppBar position="static" ref={appBarRef}>
                         <Toolbar>
@@ -124,7 +110,7 @@ const Main = () => {
                         Message Panel
                     </Box>
                         
-                    <Box className={classes.spacingPanel} ref={spacingPanelRef}>
+                    <Box className={classes.spacingPanel}>
                     
                     </Box>
 
