@@ -22,6 +22,7 @@ import { makeStyles } from "@material-ui/core";
 
 const Main = () => {
     // useState hooks
+    const [ message, setMessage ] = useState("");
     const [ spacing, setSpacing ] = useState(0);
     const [ tempDrawerOpen, setTempDrawerOpen ] = useState(false);
 
@@ -69,19 +70,43 @@ const Main = () => {
     // useEffect hooks
 
     useEffect(() => {
-        textFieldOnChangeHandler();
+        setSpacing(
+            appBarRef.current.scrollHeight +
+            messengerPanelRef.current.scrollHeight +
+            textFieldRef.current.scrollHeight
+        )
     });
+
 
     // additional functions
 
-    const textFieldOnChangeHandler = () => {
+    const messageFieldChange = (event) => {
         setSpacing(
             appBarRef.current.scrollHeight +
             messengerPanelRef.current.scrollHeight +
             textFieldRef.current.scrollHeight
         );
+
+        setMessage(event.target.value);
     };
 
+    const messageFieldKeyPress = (event) => {
+        if(event.key === "Enter") {
+            if(document.getElementById("messageField").value.length < 1) {
+                event.preventDefault();
+            } else if(! event.shiftKey) {
+                event.preventDefault();
+                sendMessageButtonClick();
+            }
+
+        }
+    };
+
+    const sendMessageButtonClick = () => {
+        console.log(message);
+        document.getElementById("messageField").value = "";
+
+    };
     
     const drawer = (
         <Container>
@@ -127,12 +152,7 @@ const Main = () => {
             <Button
                 color="secondary"
                 startIcon={<ArrowForwardIosIcon/>}
-                sx={{
-                    position: "absolute",
-                    left: 0,
-                    top: 0,
-                    zIndex: 1
-                }}
+                sx={{ position: "absolute", left: 0, top: 0, zIndex: 1 }}
                 onClick={() => setTempDrawerOpen(! tempDrawerOpen)}
             >
             </Button>
@@ -141,19 +161,13 @@ const Main = () => {
                 classes={{paper: classes.drawerPaper}}
                 anchor="left"
                 open={tempDrawerOpen}
-                sx={{ 
-                    display: { sx: "block", sm: "block", md: "block", lg: "none", xl: "none" } 
-                }}
+                sx={{ display: { sx: "block", sm: "block", md: "block", lg: "none", xl: "none" } }}
                 variant="temporary"
             >
                 <Button
                     color="secondary" 
                     endIcon={<CloseIcon />}
-                    sx={{
-                        position: "absolute",
-                        right: 0,
-                        zIndex: 1
-                    }}
+                    sx={{ position: "absolute", right: 0, zIndex: 1 }}
                     onClick={() => setTempDrawerOpen(! tempDrawerOpen)}
                 >
                 </Button>
@@ -164,9 +178,7 @@ const Main = () => {
                 classes={{ paper: classes.drawerPaper }}
                 anchor="left"
                 open={true}
-                sx={{
-                    display: { xs: "none", sm: "none", md: "none", lg: "block", xl: "block" }
-                }}
+                sx={{ display: { xs: "none", sm: "none", md: "none", lg: "block", xl: "block" } }}
                 variant="permanent"
             >
                 {drawer}
@@ -174,10 +186,7 @@ const Main = () => {
             <Box sx={{ flexGrow: 1 }}>
                 <Container>
                     <Box sx={{display: "flex",  flexDirection: "column"}}>
-                        <AppBar
-                            position="static"
-                            ref={appBarRef}
-                        >
+                        <AppBar position="static" ref={appBarRef}>
                             <Toolbar>
                                 Toolbar 3
                             </Toolbar>
@@ -197,15 +206,18 @@ const Main = () => {
                             >
                                 <Toolbar>
                                     <TextField
+                                        id="messageField"
                                         multiline
                                         maxRows={4}
-                                        onChange={textFieldOnChangeHandler}
+                                        onChange={messageFieldChange}
+                                        onKeyPress={messageFieldKeyPress}
                                         margin="dense"
                                         size="small"
                                         sx={{ flexGrow: 1 }}
                                     />
                                     <Button
                                         endIcon={<SendIcon/>}
+                                        onClick={sendMessageButtonClick}
                                         sx={{
                                             alignSelf: "flex-end",
                                             top: "-10px"
