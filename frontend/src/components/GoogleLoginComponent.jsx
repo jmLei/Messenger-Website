@@ -8,8 +8,6 @@ const GoogleLoginComponent = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const onSuccessHandler = (response) => {
-        console.log("GoogleLoginComponent.onSuccessHandler()");
-        console.log(response);
         setIsLoggedIn(true);
 
         const idToken = response.getAuthResponse().id_token;
@@ -21,11 +19,6 @@ const GoogleLoginComponent = () => {
         }).catch((error) => {
             console.log(error);
         })
-
-        // Print cookie
-        const sessionToken = Cookies.get("session-token");
-        console.log("Session Token:");
-        console.log(sessionToken);
     };
 
     const onFailureHandler = (response) => {
@@ -34,9 +27,8 @@ const GoogleLoginComponent = () => {
     }
 
     const onLogoutSuccessHandler = (response) => {
-        console.log("GoogleLoginComponent.onLogoutSuccessHandler()");
-        console.log(response);
         setIsLoggedIn(false);
+        Cookies.remove("session-token");
     }
     
     return(

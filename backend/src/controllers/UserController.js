@@ -30,5 +30,5 @@ module.exports = {
             res.send("success");
         }).catch(console.error);  
 
-    }
+    },
 }
