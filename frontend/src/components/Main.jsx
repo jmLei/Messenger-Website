@@ -91,15 +91,13 @@ const Main = () => {
     };
 
     const messageFieldKeyPress = (event) => {
-        if(event.key === "Enter") {
+        if(event.key === "Enter" && ! event.shiftKey) {
             if(document.getElementById("messageField").value.length < 1) {
                 event.preventDefault();
-            } else if(! event.shiftKey) {
-                event.preventDefault();
+            } else {
                 sendMessageButtonClick();
             }
-
-        }
+        }   
     };
 
     const sendMessageButtonClick = () => {
@@ -161,7 +159,15 @@ const Main = () => {
                 classes={{paper: classes.drawerPaper}}
                 anchor="left"
                 open={tempDrawerOpen}
-                sx={{ display: { sx: "block", sm: "block", md: "block", lg: "none", xl: "none" } }}
+                sx={{ 
+                    display: { 
+                            sx: "block", 
+                            sm: "block", 
+                            md: "block", 
+                            lg: "none", 
+                            xl: "none" 
+                    } 
+                }}
                 variant="temporary"
             >
                 <Button
@@ -178,24 +184,45 @@ const Main = () => {
                 classes={{ paper: classes.drawerPaper }}
                 anchor="left"
                 open={true}
-                sx={{ display: { xs: "none", sm: "none", md: "none", lg: "block", xl: "block" } }}
+                sx={{ 
+                    display: { 
+                        xs: "none", 
+                        sm: "none", 
+                        md: "none", 
+                        lg: "block", 
+                        xl: "block" 
+                    } 
+                }}
                 variant="permanent"
             >
                 {drawer}
             </Drawer>
             <Box sx={{ flexGrow: 1 }}>
                 <Container>
-                    <Box sx={{display: "flex",  flexDirection: "column"}}>
+                    <Box 
+                        sx={{
+                            display: "flex", 
+                            flexDirection: "column"
+                        }}
+                    >
                         <AppBar position="static" ref={appBarRef}>
                             <Toolbar>
                                 Toolbar 3
                             </Toolbar>
                         </AppBar>
                         <Paper>
-                            <Box ref={messengerPanelRef}>Message Panel</Box>
+                            <Box ref={messengerPanelRef}>
+                            
+                            </Box>
                             <Box className={classes.spacingPanel}></Box>
                         </Paper>
-                        <Box ref={textFieldRef} sx={{ position: "relative", width: "100%" }}>
+                        <Box 
+                            ref={textFieldRef} 
+                            sx={{ 
+                                position: "relative", 
+                                width: "100%" 
+                            }}
+                        >
                             <AppBar
                                 position="static"
                                 sx={{ 

@@ -1,34 +1,27 @@
 import React from "react";
 import Avatar from "@mui/material/Avatar";
-import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import ListItemText from "@mui/material/ListItemText";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
 import Typography from "@mui/material/Typography";
-
-// props = {
-//     String email
-//     String time
-//     String message
-// }
 
 const Message = (props) => {
 
     return(
-        <React.Fragment>
-            <ListItem>
-                <ListItemAvatar>
+        <Card>
+            <CardHeader
+                avatar={
                     <Avatar>{props.message.avatar}</Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                    primary = {
-                        <Typography variant="caption">{props.message.time}</Typography>
-                    }
-                    secondary = {
-                        <Typography variant="body1">{props.message.text}</Typography>
-                    }   
-                />
-            </ListItem>
-        </React.Fragment>
+                }
+                title={props.message.sender}
+                subheader={props.message.time}
+            />
+            <CardContent>
+                <Typography variant="body1">
+                    {props.message.text}
+                </Typography>
+            </CardContent>
+        </Card>
     )
 }
 

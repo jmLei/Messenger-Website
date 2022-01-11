@@ -1,37 +1,26 @@
-const chatroomService = require("../services/ChatroomService");
-const userService = require("../services/UserService");
+const { OAuth2Client } = require("google-auth-library");
+const client = new OAuth2Client(process.env.CLIENT_ID);
 
 module.exports = {
-    getName: async (req, res) => {
-        const email = req.params.email;
-        const name = await userService.getUser(email);
-        res.send(name);
-    },
+    signin: (req, res) => {
+        const token = req.body.token;
 
-    signin: async (req, res) => {
-        console.log("UserController.signin() executing");
-        const email = req.body.email;
-        const name = req.body.name;
-        console.log(email);
-        console.log(name);
-        const userExists = await userService.getUserExists(email);
-        console.log("userExists=" + userExists);
-        if(! userExists) { // if user is not in database
-            const user = {
-                "email": email,
-                "name": name
-            }
+        const verify = async () => {
+            const ticket = await client.verifyIdToken({
+                idToken: token,
+                audience: process.env.CLIENT_ID
+            }).catch((error) => {
+                console.log(error);
+            });
 
-            await userService.addUser(user);
-            // generate user's private chatroom
-            const chatroomID = await chatroomService.generateChatroomID(email, email);
-            await userService.addChatroomID(email, chatroomID);
-            await chatroomService.addChatroomID(chatroomID);
-        }
+            const payload = ticket.getPayload();
+            const userid = payload['sub'];
 
-        // get all info user needs
-        // 1. list of chatroom IDs user is in
-        const chatRoomIDs = await userService.getChatRoomIDs(email);
-        res.send(chatRoomIDs);
+            console.log(payload);
+        };
+        verify().then(()=> {
+            res.cookie("session-token", token);
+            res.send("success");
+        }).catch(console.error);   
     }
-};
+}
