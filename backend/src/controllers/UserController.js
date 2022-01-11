@@ -1,3 +1,5 @@
+const userService = require("../services/UserService");
+
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
@@ -14,13 +16,19 @@ module.exports = {
             });
 
             const payload = ticket.getPayload();
-            const userid = payload['sub'];
-
-            console.log(payload);
+            const userid = payload["sub"];
+            const userExists = await userService.userExists(userid);
+            if(! userExists) {
+                userService.addUser(payload);
+            } else {
+                console.log("User already exists.");
+            }
         };
-        verify().then(()=> {
+
+        verify().then(() => {
             res.cookie("session-token", token);
             res.send("success");
-        }).catch(console.error);   
+        }).catch(console.error);  
+
     }
 }
