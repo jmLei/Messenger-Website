@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const GoogleLoginComponent = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -20,6 +21,11 @@ const GoogleLoginComponent = () => {
         }).catch((error) => {
             console.log(error);
         })
+
+        // Print cookie
+        const sessionToken = Cookies.get("session-token");
+        console.log("Session Token:");
+        console.log(sessionToken);
     };
 
     const onFailureHandler = (response) => {
