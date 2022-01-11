@@ -113,7 +113,12 @@ const Main = () => {
                 position="static"
             >
                 <Toolbar>
-                    <Grid container spacing={7} sx={{ alignItems: "center" }}>
+                    <Grid
+                        container columnSpacing={{ 
+                            xs: 6, sm: 6, md: 6, lg: 6, xl: 6
+                        }} 
+                        sx={{ alignItems: "center" }}
+                    >
                         <Grid item>
                             <Typography variant="h6">
                                 Messenger
