@@ -1,14 +1,18 @@
 const client = require("../redis");
 
 module.exports = {
-    /* Adds a user into the Redis database.
-     *
-    */
+    addChatroom: async (userid, chatroomid) => {
+        const key = userid + "_chatroomIDs";
+        console.log(key);
+        console.log(chatroomid);
+        await client.lPush(key, chatroomid);
+    },
+
     addUser: async(payload) => {
         console.log("UserController.addUser");
         const key = payload["sub"];
-        await client.hSet(key, "given_name", payload["given_name"]);
-        await client.hSet(key, "family_name", payload["family_name"]);
+        await client.HSET(key, "given_name", payload["given_name"]);
+        await client.HSET(key, "family_name", payload["family_name"]);
     },
 
     userExists: async (userid) => {

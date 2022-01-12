@@ -1,0 +1,9 @@
+userid: { first_name, given_name }
+
+chatroomIDs: { set of all chatroom IDs }
+
+{userid}_chatroomIDs: { ordered set of all chatrooms user is in }
+
+{chatroomID}_messages = { list of message_ids }
+
+{message_id} = { sender, time_sent, text }

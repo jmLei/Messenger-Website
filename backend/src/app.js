@@ -39,12 +39,6 @@ const userRoute = require("./routes/UserRoute");
 app.use("/user", userRoute);
 app.use("/chatroom", chatroomRoute);
 
-// requests
-
-app.get("/hello", (req, res) => {
-    res.send({message: "Hello"});
-});
-
 app.listen(8080, () => {
     console.log("Server running on port 8080.");
 });

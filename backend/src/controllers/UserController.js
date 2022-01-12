@@ -1,3 +1,4 @@
+const chatroomService = require("../services/ChatroomService");
 const userService = require("../services/UserService");
 
 const { OAuth2Client } = require("google-auth-library");
@@ -20,6 +21,11 @@ module.exports = {
             const userExists = await userService.userExists(userid);
             if(! userExists) {
                 userService.addUser(payload);
+                const chatroomID = chatroomService.addChatroomID(
+                    userid, userid
+                );
+                // userService.addChatroom(userid, chatroomID);
+
             } else {
                 console.log("User already exists.");
             }
@@ -28,7 +34,6 @@ module.exports = {
         verify().then(() => {
             res.cookie("session-token", token);
             res.send("success");
-        }).catch(console.error);  
-
+        }).catch(console.error);
     },
 }
