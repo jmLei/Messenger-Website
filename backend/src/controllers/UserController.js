@@ -5,6 +5,12 @@ const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
 module.exports = {
+    getChatrooms: (req, res) => {
+        const userid = req.params.userid;
+        const chatroomIDs = chatroomService.getChatroomIDs(userid);
+        res.send(chatroomIDs);
+    },
+
     signin: (req, res) => {
         const token = req.body.token;
 

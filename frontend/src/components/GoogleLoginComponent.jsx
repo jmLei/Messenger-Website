@@ -4,18 +4,17 @@ import { GoogleLogin, GoogleLogout } from "react-google-login";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const GoogleLoginComponent = () => {
+const GoogleLoginComponent = (props) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const onSuccessHandler = (response) => {
-        setIsLoggedIn(true);
-
         const idToken = response.getAuthResponse().id_token;
 
         axios.post("http://localhost:8080/user/signin",
             { token: idToken }, { withCredentials: true }
         ).then(res => {
-            console.log(res);
+            props.initUserid(response.googleId);
+            setIsLoggedIn(true);
         }).catch((error) => {
             console.log(error);
         })
@@ -27,6 +26,7 @@ const GoogleLoginComponent = () => {
     }
 
     const onLogoutSuccessHandler = (response) => {
+        props.initUserid("");
         setIsLoggedIn(false);
         Cookies.remove("session-token");
     }

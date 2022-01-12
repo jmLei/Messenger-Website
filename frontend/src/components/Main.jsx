@@ -27,6 +27,7 @@ const Main = () => {
     const [ message, setMessage ] = useState("");
     const [ spacing, setSpacing ] = useState(0);
     const [ tempDrawerOpen, setTempDrawerOpen ] = useState(false);
+    const [ userid, setUserid ] = useState("");
 
     // useRef hooks
     const appBarRef = useRef();
@@ -77,10 +78,23 @@ const Main = () => {
             messengerPanelRef.current.scrollHeight +
             textFieldRef.current.scrollHeight
         )
+
+        if(userid !== "") {
+            console.log("get chatroom ids");
+            axios.get(`http://localhost:8080/user/chatroom/${userid}`)
+                .then((res) => {
+                    console.log(res.data);
+                }).catch((error) => {
+                    console.log(error);
+                });
+        }
     });
 
-
     // additional functions
+
+    const initUserid = (userid) => {
+        setUserid(userid);
+    };
 
     const messageFieldChange = (event) => {
         setSpacing(
@@ -127,7 +141,7 @@ const Main = () => {
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <GoogleLoginComponent />
+                            <GoogleLoginComponent initUserid={initUserid} />
                         </Grid>
                     </Grid>
                 </Toolbar>
