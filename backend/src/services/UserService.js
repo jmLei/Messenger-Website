@@ -12,7 +12,6 @@ module.exports = {
     },
 
     userExists: async (userid) => {
-        const userExists = await client.EXISTS(userid);
-        return userExists;
+        return client.EXISTS(userid);
     }
 }
