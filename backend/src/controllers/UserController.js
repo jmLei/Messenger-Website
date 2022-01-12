@@ -20,11 +20,9 @@ module.exports = {
             const userid = payload["sub"];
             const userExists = await userService.userExists(userid);
             if(! userExists) {
-                userService.addUser(payload);
-                const chatroomID = chatroomService.addChatroomID(
-                    userid, userid
-                );
-                // userService.addChatroom(userid, chatroomID);
+                await userService.addUser(payload);
+                const chatroomID = await chatroomService.addChatroomID(userid, userid);
+                await userService.addChatroom(userid, chatroomID);
 
             } else {
                 console.log("User already exists.");

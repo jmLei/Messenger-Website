@@ -5,7 +5,7 @@ module.exports = {
         const key = userid + "_chatroomIDs";
         console.log(key);
         console.log(chatroomid);
-        await client.lPush(key, chatroomid);
+        await client.LPUSH(key, chatroomid);
     },
 
     addUser: async(payload) => {

@@ -20,6 +20,8 @@ import SendIcon from "@mui/icons-material/Send";
 
 import { makeStyles } from "@material-ui/core";
 
+import axios from "axios";
+
 const Main = () => {
     // useState hooks
     const [ message, setMessage ] = useState("");
