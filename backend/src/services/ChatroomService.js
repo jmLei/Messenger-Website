@@ -17,11 +17,20 @@ module.exports = {
 	},
 
     getChatroomIDs: async (userid) => {
-        console.log("ChatroomService.getChatroomIDs()");
-        console.log("userid = " + userid);
         const key = userid + "_chatroomIDs";
         const chatroomIDs = await client.LRANGE(key, 0, -1);
-        console.log(chatroomIDs);
         return chatroomIDs; 
+    },
+
+    getMessage: async (messageID) => {
+        if(messageID === "") return "";
+        const message = await client.HGETALL(messageID);
+        return message;
+    },
+
+    getLastMessageID: async (chatroomID) => {
+        const key = chatroomID + "_message_history";
+        let lastMessageID = await client.LRANGE(key, 0, 1);
+        return (lastMessageID.length === 0) ? "" : lastMessageID[0];
     }
 };

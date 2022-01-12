@@ -4,11 +4,34 @@ const userService = require("../services/UserService");
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
+const getChatroom = async (chatroomID, userid) => {
+    const participants = chatroomID.split("_");
+    let label = (participants[0] === userid) ? participants[1] : participants[0];
+    label = await userService.getUser(label);
+    const lastMessageID = await chatroomService.getLastMessageID(chatroomID);
+    const lastMessage = await chatroomService.getMessage(lastMessageID);
+    console.log(lastMessage);
+
+    const chatroom = {
+        chatroomID: chatroomID,
+        label: label,
+        lastMessage: lastMessage
+    };
+    return chatroom;
+};
+
 module.exports = {
-    getChatrooms: (req, res) => {
+    getChatrooms: async (req, res) => {
         const userid = req.params.userid;
-        const chatroomIDs = chatroomService.getChatroomIDs(userid);
-        res.send(chatroomIDs);
+        const chatroomIDs = await chatroomService.getChatroomIDs(userid);
+        const chatrooms = [];
+        
+        for(chatroomID of chatroomIDs) {
+            const chatroom = await getChatroom(chatroomID, userid);
+            chatrooms.push(chatroom);
+        }
+
+        res.send(chatrooms);
     },
 
     signin: (req, res) => {

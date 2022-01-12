@@ -15,6 +15,12 @@ module.exports = {
         await client.HSET(key, "family_name", payload["family_name"]);
     },
 
+    getUser: async(userid) => {
+        const given_name = await client.HGET(userid, "given_name");
+        const family_name = await client.HGET(userid, "family_name");
+        return given_name + " " + family_name;
+    },
+
     userExists: async (userid) => {
         return client.EXISTS(userid);
     }
