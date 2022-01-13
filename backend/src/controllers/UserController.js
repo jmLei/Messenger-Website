@@ -6,16 +6,17 @@ const client = new OAuth2Client(process.env.CLIENT_ID);
 
 const getChatroom = async (chatroomID, userid) => {
     const participants = chatroomID.split("_");
-    let label = (participants[0] === userid) ? participants[1] : participants[0];
-    label = await userService.getUser(label);
+    let name = (participants[0] === userid) ? participants[1] : participants[0];
+    name = await userService.getUser(name);
+    const avatar = name[0].charAt(0) + name[1].charAt(0);
     const lastMessageID = await chatroomService.getLastMessageID(chatroomID);
     const lastMessage = await chatroomService.getMessage(lastMessageID);
-    console.log(lastMessage);
 
     const chatroom = {
+        avatar: avatar,
         chatroomID: chatroomID,
-        label: label,
-        lastMessage: lastMessage
+        lastMessage: lastMessage,
+        name: name
     };
     return chatroom;
 };

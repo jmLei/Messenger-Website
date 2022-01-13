@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
+import ChatTab from "./ChatTab";
 import GoogleLoginComponent from "./GoogleLoginComponent";
 
 import AppBar from "@mui/material/AppBar";
@@ -27,7 +28,9 @@ const Main = () => {
     const [ message, setMessage ] = useState("");
     const [ spacing, setSpacing ] = useState(0);
     const [ tempDrawerOpen, setTempDrawerOpen ] = useState(false);
+
     const [ userid, setUserid ] = useState("");
+    const [ chatrooms, setChatrooms ] = useState([]);
 
     // useRef hooks
     const appBarRef = useRef();
@@ -79,16 +82,22 @@ const Main = () => {
             textFieldRef.current.scrollHeight
         )
 
+    });
+
+    useEffect(() => {
+        console.log("userid");
+        console.log(userid);
+
         if(userid !== "") {
             console.log("get chatroom ids");
             axios.get(`http://localhost:8080/user/chatroom/${userid}`)
                 .then((res) => {
-                    console.log(res.data);
+                    setChatrooms(res.data);
                 }).catch((error) => {
                     console.log(error);
                 });
         }
-    });
+    }, [userid]);
 
     // additional functions
 
@@ -119,7 +128,6 @@ const Main = () => {
     const sendMessageButtonClick = () => {
         console.log(message);
         document.getElementById("messageField").value = "";
-
     };
     
     const drawer = (
@@ -162,6 +170,11 @@ const Main = () => {
             <List
                 className={classes.chatList}
             >
+                {
+                    chatrooms.map((chatroom) => {
+                        return <ChatTab key={chatroom.chatroomID} chatroom={chatroom} />
+                    })
+                }
             </List>
         </Container>
     );

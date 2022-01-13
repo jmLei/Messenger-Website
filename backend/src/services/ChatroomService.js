@@ -11,8 +11,6 @@ module.exports = {
     },
 
     chatroomIdExists: async (chatroomID) => {
-        // if chatroomID exists in the set chatroomIDs, return true
-        // else, return false
         return await client.EXISTS(chatroomID);
 	},
 
@@ -23,7 +21,7 @@ module.exports = {
     },
 
     getMessage: async (messageID) => {
-        if(messageID === "") return "";
+        if(messageID === "") return "No messages sent yet.";
         const message = await client.HGETALL(messageID);
         return message;
     },

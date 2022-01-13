@@ -18,7 +18,8 @@ module.exports = {
     getUser: async(userid) => {
         const given_name = await client.HGET(userid, "given_name");
         const family_name = await client.HGET(userid, "family_name");
-        return given_name + " " + family_name;
+        const name = [ given_name, family_name ];
+        return name;
     },
 
     userExists: async (userid) => {

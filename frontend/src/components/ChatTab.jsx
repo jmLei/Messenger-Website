@@ -10,21 +10,21 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 
-const ChatTab = (props) => {
+const chatroom = (props) => {
 	return(
-		<ListItem key={props.chatTab.name} >
+		<ListItem key={props.chatroom.chatroomID} >
 			<ListItemButton>
 				<ListItemAvatar>
-					<Avatar>{props.chatTab.avatar}</Avatar>
+					<Avatar>{props.chatroom.avatar}</Avatar>
 				</ListItemAvatar>
 				<ListItemText
-					primary={props.chatTab.name}
+					primary={props.chatroom.name[0] + " " + props.chatroom.name[1]}
 					secondary = {
 						<React.Fragment>
 							<Typography
 								variant="caption"
 							>
-								{props.chatTab.message}
+								{props.chatroom.lastMessage}
 							</Typography>
 						</React.Fragment>
 					}      
@@ -35,4 +35,4 @@ const ChatTab = (props) => {
 	);
 };
 
-export default ChatTab;
+export default chatroom;
