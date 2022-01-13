@@ -29,8 +29,9 @@ const Main = () => {
     const [ spacing, setSpacing ] = useState(0);
     const [ tempDrawerOpen, setTempDrawerOpen ] = useState(false);
 
-    const [ userid, setUserid ] = useState("");
-    const [ chatrooms, setChatrooms ] = useState([]);
+    const [activeChatroomID, setActiveChatroomID] = useState("");
+    const [chatrooms, setChatrooms] = useState([]);
+    const [userid, setUserid] = useState("");
 
     // useRef hooks
     const appBarRef = useRef();
@@ -85,7 +86,12 @@ const Main = () => {
     });
 
     useEffect(() => {
-        console.log("userid");
+        console.log("useEffect() activeChatroomID");
+        console.log(activeChatroomID);
+    }, [activeChatroomID]);
+
+    useEffect(() => {
+        console.log("useEffect() userid");
         console.log(userid);
 
         if(userid !== "") {
@@ -100,10 +106,6 @@ const Main = () => {
     }, [userid]);
 
     // additional functions
-
-    const initUserid = (userid) => {
-        setUserid(userid);
-    };
 
     const messageFieldChange = (event) => {
         setSpacing(
@@ -149,7 +151,7 @@ const Main = () => {
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <GoogleLoginComponent initUserid={initUserid} />
+                            <GoogleLoginComponent setUserid={setUserid} />
                         </Grid>
                     </Grid>
                 </Toolbar>
@@ -172,7 +174,13 @@ const Main = () => {
             >
                 {
                     chatrooms.map((chatroom) => {
-                        return <ChatTab key={chatroom.chatroomID} chatroom={chatroom} />
+                        return (
+                            <ChatTab  
+                                chatroom={chatroom} 
+                                key={chatroom.chatroomID}
+                                setActiveChatroomID={setActiveChatroomID}
+                            />
+                        )
                     })
                 }
             </List>

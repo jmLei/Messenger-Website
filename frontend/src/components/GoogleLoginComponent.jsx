@@ -13,7 +13,7 @@ const GoogleLoginComponent = (props) => {
         axios.post("http://localhost:8080/user/signin",
             { token: idToken }, { withCredentials: true }
         ).then(res => {
-            props.initUserid(response.googleId);
+            props.setUserid(response.googleId);
             setIsLoggedIn(true);
         }).catch((error) => {
             console.log(error);
@@ -26,7 +26,7 @@ const GoogleLoginComponent = (props) => {
     }
 
     const onLogoutSuccessHandler = (response) => {
-        props.initUserid("");
+        props.setUserid("");
         setIsLoggedIn(false);
         Cookies.remove("session-token");
     }
