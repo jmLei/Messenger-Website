@@ -29,7 +29,6 @@ const Main = () => {
     const [ spacing, setSpacing ] = useState(0);
     const [ tempDrawerOpen, setTempDrawerOpen ] = useState(false);
 
-    const [activeChatroomID, setActiveChatroomID] = useState("");
     const [chatrooms, setChatrooms] = useState([]);
     const [userid, setUserid] = useState("");
 
@@ -82,28 +81,7 @@ const Main = () => {
             messengerPanelRef.current.scrollHeight +
             textFieldRef.current.scrollHeight
         )
-
     });
-
-    useEffect(() => {
-        console.log("useEffect() activeChatroomID");
-        console.log(activeChatroomID);
-    }, [activeChatroomID]);
-
-    useEffect(() => {
-        console.log("useEffect() userid");
-        console.log(userid);
-
-        if(userid !== "") {
-            console.log("get chatroom ids");
-            axios.get(`http://localhost:8080/user/chatroom/${userid}`)
-                .then((res) => {
-                    setChatrooms(res.data);
-                }).catch((error) => {
-                    console.log(error);
-                });
-        }
-    }, [userid]);
 
     // additional functions
 
@@ -113,7 +91,6 @@ const Main = () => {
             messengerPanelRef.current.scrollHeight +
             textFieldRef.current.scrollHeight
         );
-
         setMessage(event.target.value);
     };
 
@@ -172,17 +149,6 @@ const Main = () => {
             <List
                 className={classes.chatList}
             >
-                {
-                    chatrooms.map((chatroom) => {
-                        return (
-                            <ChatTab  
-                                chatroom={chatroom} 
-                                key={chatroom.chatroomID}
-                                setActiveChatroomID={setActiveChatroomID}
-                            />
-                        )
-                    })
-                }
             </List>
         </Container>
     );
@@ -223,7 +189,7 @@ const Main = () => {
             </Drawer>
             <Drawer
                 className={classes.permanentDrawer}
-                classes={{ paper: classes.drawerPaper }}
+                classes={{paper: classes.drawerPaper}}
                 anchor="left"
                 open={true}
                 sx={{ 

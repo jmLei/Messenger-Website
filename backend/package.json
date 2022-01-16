@@ -19,6 +19,8 @@
     "googleapis": "^92.0.0",
     "lodash": "^4.17.21",
     "nodemon": "^2.0.15",
-    "redis": "^4.0.1"
+    "redis": "^4.0.1",
+    "socket.io": "^4.4.1",
+    "socketio": "^1.0.0"
   }
 }

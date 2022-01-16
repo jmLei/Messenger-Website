@@ -1,12 +1,27 @@
 require("dotenv").config();
 
-const express = require("express");
-const app = express();
+const app = require("express")();
+const httpServer = require("http").createServer(app);
 const bodyParser = require("body-parser");
+
+const io = require("socket.io")(httpServer, {
+    cors: {
+        origin: "http://localhost:3000"
+    }
+});
+
+io.on("connection", (socket) => {
+    console.log(`${socket.id} connected to the server.`);
+
+    io.on('disconnect', (socket) => {
+        console.log(`${socket.id} disconnected from the server.`);
+    });
+});
 
 app.use(bodyParser.json());
 
 // cors
+
 const cors = require("cors");
 const whitelist = [ "http://localhost:3000" ];
 const corsOptions = {
@@ -19,7 +34,6 @@ const corsOptions = {
     },
     credentials: true
 }
-
 app.use(cors(corsOptions));
 
 app.use((req, res, next) => {
@@ -33,12 +47,9 @@ app.use((req, res, next) => {
 
 // Routes
 
-const chatroomRoute = require("./routes/ChatroomRoute");
 const userRoute = require("./routes/UserRoute");
-
 app.use("/user", userRoute);
-app.use("/chatroom", chatroomRoute);
 
-app.listen(8080, () => {
+httpServer.listen(8080, () => {
     console.log("Server running on port 8080.");
 });

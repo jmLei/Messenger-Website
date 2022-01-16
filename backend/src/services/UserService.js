@@ -8,7 +8,7 @@ module.exports = {
         await client.LPUSH(key, chatroomid);
     },
 
-    addUser: async(payload) => {
+    createUser: async(payload) => {
         console.log("UserController.addUser");
         const key = payload["sub"];
         await client.HSET(key, "given_name", payload["given_name"]);

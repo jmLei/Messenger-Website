@@ -10,21 +10,21 @@ import Typography from "@mui/material/Typography";
 
 const chatroom = (props) => {
 	return(
-		<ListItem key={props.chatroom.chatroomID} >
+		<ListItem>
 			<ListItemButton
-				onClick={() => props.setActiveChatroomID(props.chatroom.chatroomID)}
+				onClick={() => console.log("Click")}
 			>
 				<ListItemAvatar>
-					<Avatar>{props.chatroom.avatar}</Avatar>
+					<Avatar>{props.chatroomTab.avatar}</Avatar>
 				</ListItemAvatar>
 				<ListItemText
-					primary={props.chatroom.name[0] + " " + props.chatroom.name[1]}
+					primary={props.chatroomTab.name[0] + " " + props.chatroomTab.name[1]}
 					secondary = {
 						<React.Fragment>
 							<Typography
 								variant="caption"
 							>
-								{props.chatroom.lastMessage}
+								{props.chatroomTab.lastMessage}
 							</Typography>
 						</React.Fragment>
 					}      

@@ -1,8 +1,13 @@
+import React, {useState, useEffect} from "react";
 import Main from "./components/Main";
-
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+// import io from "socket.io-client";
 
-import "./App.css";
+// const socket = io('http://localhost:8080');
+
+// socket.on('connect', () => {
+//     console.log(socket.id);
+// });
 
 const theme = createTheme({
     palette: {
@@ -13,7 +18,6 @@ const theme = createTheme({
 });
 
 function App() {
-
     return (
         <div>
             <ThemeProvider theme={theme}>
