@@ -15,19 +15,10 @@ const chatroom = (props) => {
 				onClick={() => console.log("Click")}
 			>
 				<ListItemAvatar>
-					<Avatar>{props.chatroomTab.avatar}</Avatar>
+					<Avatar>{props.chatroom.otherUser[0][0] + props.chatroom.otherUser[1][0]}</Avatar>
 				</ListItemAvatar>
 				<ListItemText
-					primary={props.chatroomTab.name[0] + " " + props.chatroomTab.name[1]}
-					secondary = {
-						<React.Fragment>
-							<Typography
-								variant="caption"
-							>
-								{props.chatroomTab.lastMessage}
-							</Typography>
-						</React.Fragment>
-					}      
+					primary={props.chatroom.otherUser[0] + " " + props.chatroom.otherUser[1]}  
 				/>
 				<Divider/>
 			</ListItemButton>

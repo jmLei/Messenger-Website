@@ -22,6 +22,7 @@ import SendIcon from "@mui/icons-material/Send";
 
 import { makeStyles } from "@material-ui/core";
 import io from "socket.io-client";
+import axios from "axios";
 
 const socket = io('http://localhost:8080');
 
@@ -32,18 +33,13 @@ const Main = () => {
     const [ tempDrawerOpen, setTempDrawerOpen ] = useState(false);
 
     const [userid, setUserid] = useState("");
-    const [chatroomList, setChatroomList] = useState([]);
-    const [messageHistory, setMessageHistory] = useState([]);
+    const [chatroomID, setChatroomID] = useState("");
+    const [chatrooms, setChatrooms] = useState([]);
 
     // Socket
 
     socket.on('message', (message) => {
-        setMessageHistory([...messageHistory, {
-            key: Date.now(),
-            avatar: "AS",
-            sender: "Andrew Shinjo",
-            text: message
-        }]);
+       
     });
 
     // useRef hooks
@@ -106,6 +102,12 @@ const Main = () => {
             textFieldRef.current.scrollHeight
         );
         setMessage(event.target.value);
+
+        if(userid != "") {
+            axios.get(`http://localhost:8080/user/chatrooms/${userid}`)
+                .then((res) => setChatrooms(res.data))
+                .catch((error) => console.log(error));
+        }
     };
 
     const messageFieldKeyPress = (event) => {
@@ -165,6 +167,12 @@ const Main = () => {
             <List
                 className={classes.chatList}
             >
+                {
+                    chatrooms.map((chatroom) => {
+                        console.log(chatroom);
+                        return <ChatTab key={chatroomID} chatroom={chatroom} />
+                    })
+                }
             </List>
         </Container>
     );
@@ -236,11 +244,7 @@ const Main = () => {
                         </AppBar>
                         <Paper>
                             <Box ref={messengerPanelRef}>
-                                {
-                                    messageHistory.map((message) => {
-                                        return <Message key={message.key} message={message} />
-                                    })
-                                }
+
                             </Box>
                             <Box className={classes.spacingPanel}></Box>
                         </Paper>
