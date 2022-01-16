@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 import ChatTab from "./ChatTab";
 import GoogleLoginComponent from "./GoogleLoginComponent";
+import Message from "./Message";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -20,8 +21,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import SendIcon from "@mui/icons-material/Send";
 
 import { makeStyles } from "@material-ui/core";
+import io from "socket.io-client";
 
-import axios from "axios";
+const socket = io('http://localhost:8080');
 
 const Main = () => {
     // useState hooks
@@ -29,8 +31,20 @@ const Main = () => {
     const [ spacing, setSpacing ] = useState(0);
     const [ tempDrawerOpen, setTempDrawerOpen ] = useState(false);
 
-    const [chatrooms, setChatrooms] = useState([]);
     const [userid, setUserid] = useState("");
+    const [chatroomList, setChatroomList] = useState([]);
+    const [messageHistory, setMessageHistory] = useState([]);
+
+    // Socket
+
+    socket.on('message', (message) => {
+        setMessageHistory([...messageHistory, {
+            key: Date.now(),
+            avatar: "AS",
+            sender: "Andrew Shinjo",
+            text: message
+        }]);
+    });
 
     // useRef hooks
     const appBarRef = useRef();
@@ -105,8 +119,10 @@ const Main = () => {
     };
 
     const sendMessageButtonClick = () => {
-        console.log(message);
-        document.getElementById("messageField").value = "";
+        if(message.length > 0) {
+            socket.emit("message", message);
+            document.getElementById("messageField").value = "";
+        }
     };
     
     const drawer = (
@@ -169,11 +185,11 @@ const Main = () => {
                 open={tempDrawerOpen}
                 sx={{ 
                     display: { 
-                            sx: "block", 
-                            sm: "block", 
-                            md: "block", 
-                            lg: "none", 
-                            xl: "none" 
+                        sx: "block", 
+                        sm: "block", 
+                        md: "block", 
+                        lg: "none", 
+                        xl: "none" 
                     } 
                 }}
                 variant="temporary"
@@ -220,7 +236,11 @@ const Main = () => {
                         </AppBar>
                         <Paper>
                             <Box ref={messengerPanelRef}>
-                            
+                                {
+                                    messageHistory.map((message) => {
+                                        return <Message key={message.key} message={message} />
+                                    })
+                                }
                             </Box>
                             <Box className={classes.spacingPanel}></Box>
                         </Paper>

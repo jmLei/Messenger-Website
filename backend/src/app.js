@@ -13,7 +13,11 @@ const io = require("socket.io")(httpServer, {
 io.on("connection", (socket) => {
     console.log(`${socket.id} connected to the server.`);
 
-    io.on('disconnect', (socket) => {
+    socket.on('message', (message) => {
+        io.emit('message', message);
+    });
+
+    socket.on('disconnect', () => {
         console.log(`${socket.id} disconnected from the server.`);
     });
 });
