@@ -11,9 +11,7 @@ import Typography from "@mui/material/Typography";
 const chatroom = (props) => {
 	return(
 		<ListItem>
-			<ListItemButton
-				onClick={() => console.log("Click")}
-			>
+			<ListItemButton>
 				<ListItemAvatar>
 					<Avatar>{props.chatroom.otherUser[0][0] + props.chatroom.otherUser[1][0]}</Avatar>
 				</ListItemAvatar>

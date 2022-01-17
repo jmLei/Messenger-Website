@@ -1,3 +1,4 @@
+const chatroomService = require("../services/ChatroomService");
 const userService = require("../services/UserService");
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(process.env.CLIENT_ID);
@@ -13,13 +14,11 @@ module.exports = {
             const otherUser = (users[0] === userid) ? users[0] : users[1];
             const username = await userService.getUser(user);
             const otherUsername = await userService.getUser(otherUser);
-            const messageHistory = await userService.getMessageHistory(chatroomID);
             
             const chatroom = {
                 chatroomID: chatroomID,
                 user: username,
                 otherUser: otherUsername,
-                messageHistory: messageHistory
             };
             return chatroom;
         });
@@ -27,16 +26,13 @@ module.exports = {
         Promise.all(promises)
         .then(result => res.send(result))
         .catch(error => console.log(error));
+    },
 
-        /*
-            key = chatroomID
-            value = {
-                user: string
-                otherUser: string
-                messageHistory: list of strings
-
-            }
-        */
+    getMessageHistory: async (req, res) => {
+        const chatroomID = req.params.chatroomID;
+        const messageHistory = await chatroomService
+                                .getMessageHistory(chatroomID);
+        res.send(messageHistory);
     },
 
     getName: async (req, res) => {
@@ -47,7 +43,6 @@ module.exports = {
 
     signin: async (req, res) => {
         const token = req.body.token;
-
         const verify = async () => {
             const ticket = await client.verifyIdToken({
                 idToken: token,
@@ -61,6 +56,9 @@ module.exports = {
             const userExists = await userService.userExists(userid);
             if(! userExists) {
                 await userService.createUser(payload);
+                const chatroomID = await chatroomService.createChatroomID(
+                    userid, userid
+                )
                 await userService.addChatroom(userid, chatroomID);
             } else {
                 console.log("User already exists.");

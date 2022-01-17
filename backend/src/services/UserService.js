@@ -20,11 +20,6 @@ module.exports = {
         return await client.LRANGE(key, 0, -1);
     },
 
-    getMessageHistory: async (chatroomID) => {
-        const messageHistory = await client.LRANGE(chatroomID, 0, -1);
-        return messageHistory;
-    },
-
     getUser: async(userid) => {
         const given_name = await client.HGET(userid, "given_name");
         const family_name = await client.HGET(userid, "family_name");

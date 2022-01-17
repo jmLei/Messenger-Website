@@ -24,22 +24,28 @@ import { makeStyles } from "@material-ui/core";
 import io from "socket.io-client";
 import axios from "axios";
 
-const socket = io('http://localhost:8080');
+const socket = io(
+    'http://localhost:8080', { autoConnect: false }
+);
+
+socket.onAny((event, ...args) => {
+    console.log(event, args);
+});
 
 const Main = () => {
     // useState hooks
-    const [ message, setMessage ] = useState("");
-    const [ spacing, setSpacing ] = useState(0);
-    const [ tempDrawerOpen, setTempDrawerOpen ] = useState(false);
-
+    const [message, setMessage] = useState("");
+    const [messageHistory, setMessageHistory] = useState([]);
+    const [spacing, setSpacing] = useState(0);
+    const [tempDrawerOpen, setTempDrawerOpen] = useState(false);
     const [userid, setUserid] = useState("");
-    const [chatroomID, setChatroomID] = useState("");
-    const [chatrooms, setChatrooms] = useState([]);
 
     // Socket
 
-    socket.on('message', (message) => {
-       
+    socket.on('message', message => {
+        setMessageHistory(
+            [...messageHistory, message]
+        );
     });
 
     // useRef hooks
@@ -86,6 +92,13 @@ const Main = () => {
     // useEffect hooks
 
     useEffect(() => {
+        if(userid != "") {
+            socket.auth = { userid };
+            socket.connect();
+        }
+    });
+
+    useEffect(() => {
         setSpacing(
             appBarRef.current.scrollHeight +
             messengerPanelRef.current.scrollHeight +
@@ -102,12 +115,6 @@ const Main = () => {
             textFieldRef.current.scrollHeight
         );
         setMessage(event.target.value);
-
-        if(userid != "") {
-            axios.get(`http://localhost:8080/user/chatrooms/${userid}`)
-                .then((res) => setChatrooms(res.data))
-                .catch((error) => console.log(error));
-        }
     };
 
     const messageFieldKeyPress = (event) => {
@@ -126,7 +133,7 @@ const Main = () => {
             document.getElementById("messageField").value = "";
         }
     };
-    
+
     const drawer = (
         <Container>
             <AppBar
@@ -167,12 +174,6 @@ const Main = () => {
             <List
                 className={classes.chatList}
             >
-                {
-                    chatrooms.map((chatroom) => {
-                        console.log(chatroom);
-                        return <ChatTab key={chatroomID} chatroom={chatroom} />
-                    })
-                }
             </List>
         </Container>
     );
@@ -239,12 +240,15 @@ const Main = () => {
                     >
                         <AppBar position="static" ref={appBarRef}>
                             <Toolbar>
-                                Toolbar 3
                             </Toolbar>
                         </AppBar>
                         <Paper>
                             <Box ref={messengerPanelRef}>
-
+                            {
+                                messageHistory.map(message => {
+                                    return <p>{message}</p>
+                                })
+                            }
                             </Box>
                             <Box className={classes.spacingPanel}></Box>
                         </Paper>
