@@ -22,15 +22,10 @@ import SendIcon from "@mui/icons-material/Send";
 
 import { makeStyles } from "@material-ui/core";
 import io from "socket.io-client";
-import axios from "axios";
 
 const socket = io(
     'http://localhost:8080', { autoConnect: false }
 );
-
-socket.onAny((event, ...args) => {
-    console.log(event, args);
-});
 
 const Main = () => {
     // useState hooks
@@ -42,7 +37,7 @@ const Main = () => {
 
     // Socket
 
-    socket.on('message', message => {
+    socket.on('message.send', (message) => {
         setMessageHistory(
             [...messageHistory, message]
         );
@@ -95,6 +90,7 @@ const Main = () => {
         if(userid != "") {
             socket.auth = { userid };
             socket.connect();
+            socket.emit('username.create', userid);
         }
     });
 
@@ -129,7 +125,7 @@ const Main = () => {
 
     const sendMessageButtonClick = () => {
         if(message.length > 0) {
-            socket.emit("message", message);
+            socket.emit("message.send", `${userid}: ${message}.`);
             document.getElementById("messageField").value = "";
         }
     };

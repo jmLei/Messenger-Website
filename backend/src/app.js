@@ -10,15 +10,27 @@ const io = require("socket.io")(httpServer, {
     }
 });
 
-io.on("connection", (socket) => {
-    console.log(`${socket.id} connected to the server.`);
+const sockets = {};
 
-    socket.on('message', (message) => {
-        io.emit('message', message);
+io.on("connection", (socket) => {    
+    socket.on('disconnect', () => {
+        // console.log(`${socket.id} disconnected from the server.`);
     });
 
-    socket.on('disconnect', () => {
-        console.log(`${socket.id} disconnected from the server.`);
+    socket.on('message.send', (message) => {
+        io.emit('message.send', message);
+    });
+
+    socket.on('username.create', (userid) => {
+        if(! sockets.hasOwnProperty(userid)) {
+            sockets[userid] = [];
+        }
+        sockets[userid].push = socket;
+        console.log(sockets[userid]);
+    });
+
+    socket.on('private.message.send', (userid, message) => {
+        sockets[userid].emit(`${userid}: ${message}`);
     });
 });
 
