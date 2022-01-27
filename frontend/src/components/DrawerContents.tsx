@@ -12,6 +12,7 @@ const DrawerContents = () => {
         <Container
             sx={{
                 marginTop: '35px',
+                position: 'static',
                 width: '350px'
             }}
         >

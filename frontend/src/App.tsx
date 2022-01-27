@@ -1,8 +1,12 @@
 import React, {useState, useEffect} from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+import Box from '@mui/material/Box';
+
 import PermanentDrawer from './components/PermanentDrawer';
+import PrivateChat from './components/PrivateChat';
 import TemporaryDrawer from './components/TemporaryDrawer';
+import useStyles from './components/Styles';
 
 const theme = createTheme({
     palette: {
@@ -12,14 +16,22 @@ const theme = createTheme({
     }
 });
 
+
 function App() {
+    const classes = useStyles();
+
     return (
-        <div>
             <ThemeProvider theme={theme}>
-                <PermanentDrawer />
-                <TemporaryDrawer />
+                <Box sx={{ display: 'flex' }}>
+                    <div>
+                        <PermanentDrawer />
+                        <TemporaryDrawer />
+                    </div>
+                    <Box sx={{ flexGrow: 1 }}>
+                        <PrivateChat />
+                    </Box>
+                </Box>
             </ThemeProvider>
-        </div>
     );
 }
 

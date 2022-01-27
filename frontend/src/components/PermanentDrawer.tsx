@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 
 import DrawerContents from './DrawerContents';
+import useStyles from './Styles';
 
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -9,10 +10,14 @@ import Drawer from '@mui/material/Drawer';
 // Display the contents of the drawer.
 
 const PermanentDrawer = () => {
+    const classes = useStyles();
+
     return(
         <Drawer
             anchor='left'
-            open={true}
+            className={ classes.permanentDrawer }
+            classes = {{ papar: classes.drawerPaper }}
+            open={ true }
             sx={{
                 display: {
                     xs: 'none',
@@ -20,7 +25,7 @@ const PermanentDrawer = () => {
                     md: 'none',
                     lg: 'block',
                     xl: 'block'
-                }
+                },
             }}
             variant='permanent'
         >
