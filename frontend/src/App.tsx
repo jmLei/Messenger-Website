@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from "react";
-import Main from "./components/Main";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+import PermanentDrawer from './components/PermanentDrawer';
+import TemporaryDrawer from './components/TemporaryDrawer';
 
 const theme = createTheme({
     palette: {
@@ -14,7 +16,8 @@ function App() {
     return (
         <div>
             <ThemeProvider theme={theme}>
-                <Main />
+                <PermanentDrawer />
+                <TemporaryDrawer />
             </ThemeProvider>
         </div>
     );
