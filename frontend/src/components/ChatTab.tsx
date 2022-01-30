@@ -6,17 +6,23 @@ import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import Typography from "@mui/material/Typography";
 
-const chatroom = (props) => {
+interface Chatroom {
+    avatar: string,
+    lastMessage: string,
+    name: string
+}
+
+const ChatTab = ({avatar, lastMessage, name}: Chatroom) => {
 	return(
 		<ListItem>
 			<ListItemButton>
 				<ListItemAvatar>
-					<Avatar>{props.chatroom.otherUser[0][0] + props.chatroom.otherUser[1][0]}</Avatar>
+					<Avatar>{avatar}</Avatar>
 				</ListItemAvatar>
 				<ListItemText
-					primary={props.chatroom.otherUser[0] + " " + props.chatroom.otherUser[1]}  
+					primary={name}  
+                    secondary={lastMessage}
 				/>
 				<Divider/>
 			</ListItemButton>
@@ -24,4 +30,4 @@ const chatroom = (props) => {
 	);
 };
 
-export default chatroom;
+export default ChatTab;

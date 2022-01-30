@@ -1,6 +1,8 @@
 import ButtonPanel from './ButtonPanel';
+import ChatTab from './ChatTab';
 
 import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
@@ -35,6 +37,43 @@ const DrawerContents = () => {
                     />
                 </Toolbar>
             </AppBar>
+            <Box>
+                <ChatTab
+                    avatar={"AS"}
+                    lastMessage={"the last message"}
+                    name={"Andrew Shinjo"}
+                />
+                <ChatTab
+                    avatar={"AS"}
+                    lastMessage={"the last message"}
+                    name={"Andrew Shinjo"}
+                />
+                <ChatTab
+                    avatar={"AS"}
+                    lastMessage={"the last message"}
+                    name={"Andrew Shinjo"}
+                />
+                <ChatTab
+                    avatar={"AS"}
+                    lastMessage={"the last message"}
+                    name={"Andrew Shinjo"}
+                />
+                <ChatTab
+                    avatar={"AS"}
+                    lastMessage={"the last message"}
+                    name={"Andrew Shinjo"}
+                />
+                <ChatTab
+                    avatar={"AS"}
+                    lastMessage={"the last message"}
+                    name={"Andrew Shinjo"}
+                />
+                <ChatTab
+                    avatar={"AS"}
+                    lastMessage={"the last message"}
+                    name={"Andrew Shinjo"}
+                />
+            </Box>
         </Container>
     );
 };
