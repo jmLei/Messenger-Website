@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
+import GoogleLoginComponent from './GoogleLoginComponent';
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -14,24 +16,24 @@ const PrivateChat = () => {
     const [ message, setMessage ] = useState('');
     const [ space, setSpace ] = useState(0);
 
-    const appBarRef = useRef();
-    const messagesRef = useRef();
-    const textFieldRef = useRef();
+    const appBarRef = useRef<HTMLDivElement>();
+    const messagesRef = useRef<HTMLDivElement>();
+    const textFieldRef = useRef<HTMLDivElement>();
 
     useEffect(() => {
         updateSpacing();
     });
 
-    const onChangeHandler = event => {
+    const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         setMessage(event.target.value);
         updateSpacing();
     };
 
     const updateSpacing = () => {
         setSpace(
-            appBarRef.current.scrollHeight +
-            messagesRef.current.scrollHeight +
-            textFieldRef.current.scrollHeight
+            appBarRef?.current?.scrollHeight +
+            messagesRef?.current?.scrollHeight +
+            textFieldRef?.current?.scrollHeight
         )
     }
 
@@ -48,6 +50,7 @@ const PrivateChat = () => {
             >
                 <Toolbar>
                     Appbar
+                    <GoogleLoginComponent />
                 </Toolbar>
             </AppBar>
             <Paper>

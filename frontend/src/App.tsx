@@ -18,7 +18,6 @@ const theme = createTheme({
 
 
 function App() {
-    const classes = useStyles();
 
     return (
             <ThemeProvider theme={theme}>

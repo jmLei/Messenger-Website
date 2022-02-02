@@ -14,7 +14,7 @@ module.exports = {
             const otherUser = (users[0] === userid) ? users[0] : users[1];
             const username = await userService.getUser(user);
             const otherUsername = await userService.getUser(otherUser);
-            
+
             const chatroom = {
                 chatroomID: chatroomID,
                 user: username,

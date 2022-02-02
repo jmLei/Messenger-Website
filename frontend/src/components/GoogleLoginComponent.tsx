@@ -1,52 +1,50 @@
-import React, {useEffect, useState} from "react";
+import React, { useState } from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const GoogleLoginComponent = (props) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+const GoogleLoginComponent = () => {
+    const [ loggedIn, setLoggedIn ] = useState( false );
+    const [ userID, setUserID ] = useState( false );
 
-    const onSuccessHandler = (response) => {
+    const onSuccessHandler = (response: any) => {
         const idToken = response.getAuthResponse().id_token;
-
         axios.post("http://localhost:8080/user/signin",
             { token: idToken }, { withCredentials: true }
         ).then(res => {
-            props.setUserid(response.googleId);
-            setIsLoggedIn(true);
+            setLoggedIn(true);
         }).catch((error) => {
             console.log(error);
         })
     };
 
-    const onFailureHandler = (response) => {
+    const onFailureHandler = () => {
         console.log("GoogleLoginComponent.onFailureHandler()");
-        console.log(response);
     }
 
-    const onLogoutSuccessHandler = (response) => {
-        props.setUserid("");
-        setIsLoggedIn(false);
+    const onLogoutSuccessHandler = () => {
+        setLoggedIn( false );
         Cookies.remove("session-token");
     }
     
     return(
         <React.Fragment>
             {
-                isLoggedIn ? (
+                loggedIn ? 
+                (
                     <GoogleLogout
-                        clientId={process.env.REACT_APP_CLIENT_ID}
+                        clientId={process.env.REACT_APP_CLIENT_ID || ''}
                         buttonText={"Logout"}
+                        onFailure={onFailureHandler}
                         onLogoutSuccess={onLogoutSuccessHandler}
                     ></GoogleLogout>
                 ) : (
                     <GoogleLogin
-                        clientId={process.env.REACT_APP_CLIENT_ID}
-                        buttonText="Sign In"
+                        clientId={process.env.REACT_APP_CLIENT_ID || ''}
+                        buttonText="Login"
                         onSuccess={onSuccessHandler}
                         onFailure={onFailureHandler}
-                        isSignedIn={true}
                         cookiePolicy={"single_host_origin"}
                     />
                 )
