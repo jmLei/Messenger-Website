@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import GoogleLoginComponent from './GoogleLoginComponent';
 
@@ -16,25 +16,28 @@ const PrivateChat = () => {
     const [ message, setMessage ] = useState('');
     const [ space, setSpace ] = useState(0);
 
-    const appBarRef = useRef<HTMLDivElement>();
-    const messagesRef = useRef<HTMLDivElement>();
-    const textFieldRef = useRef<HTMLDivElement>();
+    const appBarRef = useRef<HTMLDivElement | null>(null);
+    const messagesRef = useRef<HTMLElement | null>(null);
+    const textFieldRef = useRef<HTMLElement | null>(null);
 
     useEffect(() => {
         updateSpacing();
     });
 
     const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setMessage(event.target.value);
+        
+        setMessage(event.currentTarget.value);
         updateSpacing();
     };
 
     const updateSpacing = () => {
-        setSpace(
-            appBarRef?.current?.scrollHeight +
-            messagesRef?.current?.scrollHeight +
-            textFieldRef?.current?.scrollHeight
-        )
+        if(appBarRef.current && messagesRef.current && textFieldRef.current) {
+            setSpace(
+                appBarRef.current.scrollHeight +
+                messagesRef.current.scrollHeight +
+                textFieldRef.current.scrollHeight
+            );
+        }
     }
 
     return(
@@ -87,12 +90,12 @@ const PrivateChat = () => {
                             multiline
                             maxRows={4}
                             margin='dense'
+                            onChange={onChangeHandler}
                             size='small'
                             sx={{ flexGrow: 1 }}
                         />
                         <Button
                             endIcon={ <SendIcon /> }
-                            onChange={onChangeHandler}
                             sx={{
                                 alignSelf: 'flex-end',
                                 top: '-10px'
