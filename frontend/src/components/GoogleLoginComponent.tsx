@@ -1,22 +1,28 @@
 import React, { useState } from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 
+import APIHandler from '../Api';
+
 import axios from "axios";
 import Cookies from "js-cookie";
 
 const GoogleLoginComponent = () => {
-    const [ loggedIn, setLoggedIn ] = useState( false );
-    const [ userID, setUserID ] = useState( false );
+    const [ loggedIn, setLoggedIn ] = useState(false);
+    const [ userID, setUserID ] = useState('');
 
     const onSuccessHandler = (response: any) => {
-        const idToken = response.getAuthResponse().id_token;
-        axios.post("http://localhost:8080/user/signin",
-            { token: idToken }, { withCredentials: true }
-        ).then(res => {
+        const ID_token = response.getAuthResponse().id_token;
+        const googleID = response.googleId;
+
+        APIHandler.signin(ID_token)
+        .then(response => {
             setLoggedIn(true);
-        }).catch((error) => {
-            console.log(error);
+            setUserID(googleID);
+            Cookies.set('session-token', ID_token);
         })
+        .catch(error => {
+            console.log(error);
+        });
     };
 
     const onFailureHandler = () => {
@@ -24,7 +30,7 @@ const GoogleLoginComponent = () => {
     }
 
     const onLogoutSuccessHandler = () => {
-        setLoggedIn( false );
+        setLoggedIn(false);
         Cookies.remove("session-token");
     }
     
@@ -35,21 +41,20 @@ const GoogleLoginComponent = () => {
                 (
                     <GoogleLogout
                         clientId={process.env.REACT_APP_CLIENT_ID || ''}
-                        buttonText={"Logout"}
+                        buttonText={'Logout'}
                         onFailure={onFailureHandler}
                         onLogoutSuccess={onLogoutSuccessHandler}
                     ></GoogleLogout>
                 ) : (
                     <GoogleLogin
                         clientId={process.env.REACT_APP_CLIENT_ID || ''}
-                        buttonText="Login"
+                        buttonText={'Login'}
                         onSuccess={onSuccessHandler}
                         onFailure={onFailureHandler}
                         cookiePolicy={"single_host_origin"}
                     />
                 )
             }
-
         </React.Fragment>
     )
 };
