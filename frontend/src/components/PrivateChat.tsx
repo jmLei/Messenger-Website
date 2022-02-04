@@ -52,8 +52,16 @@ const PrivateChat = () => {
                 ref={appBarRef}
             >
                 <Toolbar>
-                    Appbar
-                    <GoogleLoginComponent />
+                    <Box
+                        sx={{
+                            flexGrow: 1
+                        }}
+                    >
+                        AppBar
+                    </Box>
+                    <Box>
+                        <GoogleLoginComponent />
+                    </Box>
                 </Toolbar>
             </AppBar>
             <Paper>
