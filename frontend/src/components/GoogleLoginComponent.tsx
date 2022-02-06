@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 
 import APIHandler from '../Api';
+import { useUserContext } from './UserContext';
 
-import axios from "axios";
 import Cookies from "js-cookie";
+
+
 
 const GoogleLoginComponent = () => {
     const [ loggedIn, setLoggedIn ] = useState(false);
-    const [ userID, setUserID ] = useState('');
+    const { userID, setUserID } = useUserContext();
 
     const onSuccessHandler = (response: any) => {
         const ID_token = response.getAuthResponse().id_token;
@@ -26,7 +28,7 @@ const GoogleLoginComponent = () => {
     };
 
     const onFailureHandler = () => {
-        console.log("GoogleLoginComponent.onFailureHandler()");
+        console.log('Login failed.');
     }
 
     const onLogoutSuccessHandler = () => {
