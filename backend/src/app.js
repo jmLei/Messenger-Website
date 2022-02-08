@@ -1,8 +1,16 @@
 require("dotenv").config();
-
-const app = require("express")();
+const express = require('express');
+const app = express();
+app.use(express.json());    
 const httpServer = require("http").createServer(app);
 const bodyParser = require("body-parser");
+
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/messenger_db');
+
+mongoose.connection.once('open', () => {
+    console.log("Connected to MongoDB.");
+});
 
 const io = require("socket.io")(httpServer, {
     cors: {

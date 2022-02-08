@@ -1,33 +1,42 @@
-const client = require("../redis");
+const mongoose = require('mongoose');
+const User = require('../models/user');
 
 module.exports = {
-    addChatroom: async (userid, chatroomid) => {
-        const key = userid + "_chatroomIDs";
-        console.log(key);
-        console.log(chatroomid);
-        await client.LPUSH(key, chatroomid);
+    /**
+     * Inserts a user into the database.
+     * @param id = the user's id 
+     * @param givenName = the user's first name
+     * @param familyName = the user's last name
+     */
+    createUser: async(id, givenName, familyName) => {
+        const user = new User({
+            "_id": id,
+            "givenName": givenName,
+            "familyName": familyName,
+            "chatroomIDs": [],
+            "incomingChatRequests": [],
+            "outgoingChatRequests": []
+        });
+        user.save().then(result => {
+            console.log(result);
+        }).catch(error => {
+            console.log(error);
+        });
     },
 
-    createUser: async(payload) => {
-        console.log("UserController.addUser");
-        const key = payload["sub"];
-        await client.HSET(key, "given_name", payload["given_name"]);
-        await client.HSET(key, "family_name", payload["family_name"]);
+    /**
+     * Returns whether consumed id exists in the database.
+     * @param {*} id = a user's id
+     */
+    exists: async(id) => {
+        return await User.findOne( { _id: id} );
     },
 
-    getChatroomIDs: async (userid) => {
-        const key = `${userid}_chatroomIDs`;
-        return await client.LRANGE(key, 0, -1);
+    getFamilyName: async (id) => {
+        return await User.findById( { _id: id }, {familyName: 1} );
     },
 
-    getUser: async(userid) => {
-        const given_name = await client.HGET(userid, "given_name");
-        const family_name = await client.HGET(userid, "family_name");
-        const name = [ given_name, family_name ];
-        return name;
+    getGivenName: async (id) => {
+        return await User.findById( { _id: id }, { givenName: 1 } );
     },
-
-    userExists: async (userid) => {
-        return client.EXISTS(userid);
-    }
 }
