@@ -72,7 +72,7 @@ app.use((req, res, next) => {
 // Routes
 
 const userRoute = require("./routes/UserRoute");
-app.use("/user", userRoute);
+app.use("api/users", userRoute);
 
 httpServer.listen(8080, () => {
     console.log("Server running on port 8080.");

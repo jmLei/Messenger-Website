@@ -4,13 +4,6 @@ const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
 module.exports = {
-    test: async (req, res) => {
-        console.log("test");
-        const id = req.params.id;
-        const givenName = await userService.getGivenName(id);
-        res.send(givenName);
-    },
-
     signin: async (req, res) => {
         const token = req.body.token;
         const verify = async () => {
