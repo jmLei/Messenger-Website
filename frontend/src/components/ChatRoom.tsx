@@ -8,21 +8,21 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 
 interface Chatroom {
-    avatar: string,
-    lastMessage: string,
-    name: string
+	id: string
+    // avatar: string,
+    // lastMessage: string,
+    // name: string
 }
 
-const ChatTab = ({avatar, lastMessage, name}: Chatroom) => {
+const ChatRoom = ({ id }: Chatroom) => {
 	return(
 		<ListItem>
 			<ListItemButton>
 				<ListItemAvatar>
-					<Avatar>{avatar}</Avatar>
+					
 				</ListItemAvatar>
 				<ListItemText
-					primary={name}  
-                    secondary={lastMessage}
+					primary={id}  
 				/>
 				<Divider/>
 			</ListItemButton>
@@ -30,4 +30,4 @@ const ChatTab = ({avatar, lastMessage, name}: Chatroom) => {
 	);
 };
 
-export default ChatTab;
+export default ChatRoom;

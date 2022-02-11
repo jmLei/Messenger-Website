@@ -8,16 +8,7 @@ module.exports = {
      * @param {*} chatroomID = a chatroom's ID
      */
     addChatroomID: async (id, chatroomID) => {
-        User.update( 
-            {
-                "_id": id
-            },
-            {
-                "$push": {
-                    "chatroomIDs": chatroomID
-                }
-            }
-        );
+        await User.updateOne( { '_id': id }, { '$push': { 'chatroomIDs': chatroomID } } );
     },
 
     /**
@@ -46,7 +37,7 @@ module.exports = {
      */
     createUser: async(id, givenName, familyName) => {
         const user = new User({
-            "_id": id,
+            "_id": `${id}`,
             "givenName": givenName,
             "familyName": familyName,
             "chatroomIDs": [],
@@ -75,7 +66,7 @@ module.exports = {
      * @returns a list of chatroom IDs
      */
     getChatroomIDs: async (id) => {
-        return await User.findOne( { _id: id }, { chatroomIDs: 1 } );
+        return await User.findOne( { '_id': `${id}` }, { 'chatroomIDs': 1 } );
     },
 
     /**
@@ -93,7 +84,7 @@ module.exports = {
      * @returns a list of outgoing chat requests
      */
     getOutgoingChatRequests: async (id) => {
-        return await User.findOne( { _id: id }, { outgoingChatRequests: 1 } ); 
+        return await User.findOne( { '_id': `${id}` }, { outgoingChatRequests: 1 } ); 
     },
 
     /**

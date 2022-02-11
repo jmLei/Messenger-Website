@@ -4,11 +4,11 @@ const userSchema = mongoose.Schema({
     _id: String,
     givenName: String,
     familyName: String,
-    chatroomIDs: [ mongoose.ObjectId ],
-    incomingChatRequests: [ mongoose.ObjectId ],
-    outgoingChatRequests: [ mongoose.ObjectId ]
+    chatroomIDs: [],
+    incomingChatRequests: [],
+    outgoingChatRequests: []
 });
 
-userSchema.index({ givenName: 'text', familyName: 'text' });
+userSchema.index( { givenName: 'text', familyName: 'text' } );
 
 module.exports = mongoose.model('User', userSchema);

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 
 type UserContextType = {
-    userID: string | null
+    userID: string
     setUserID: React.Dispatch<React.SetStateAction<string>>
 }
 

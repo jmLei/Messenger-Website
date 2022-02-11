@@ -1,5 +1,5 @@
 import ButtonPanel from './ButtonPanel';
-import ChatTab from './ChatTab';
+import ChatRoom from './ChatRoom';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -8,11 +8,29 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import APIHandler from '../Api';
+import { useUserContext } from './UserContext';
 
 const DrawerContents = () => {
+
+    const [ chatrooms, setChatrooms ] = useState([]);
+    const { userID } = useUserContext();
+
+    useEffect(() => {
+        console.log(`userID = ${userID}.`);
+        console.log('useEffect');
+        if(userID.length > 0) {
+            APIHandler.getChatrooms(userID)
+            .then(result => {
+                setChatrooms(result.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        }
+    }, [ userID ]);
 
     const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         const name = event.target.value;
@@ -56,6 +74,9 @@ const DrawerContents = () => {
                 </Toolbar>
             </AppBar>
             <Box>
+                {
+                    chatrooms.map(chatroom => <ChatRoom id={chatroom._id} key={chatroom._id} />)
+                }
             </Box>
         </Container>
     );

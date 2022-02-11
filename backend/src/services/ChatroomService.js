@@ -14,5 +14,14 @@ module.exports = {
         });
 
         return chatroom;
+    },
+
+    getChatrooms: async (chatroomIDs) => {
+        const chatrooms = [];
+        for(let i = 0; i < chatroomIDs.length; i++) {
+            const chatroom = await Chatroom.findOne( { '_id': `${chatroomIDs[i]}` });
+            chatrooms.push(chatroom);
+        }
+        return chatrooms;
     }
 };
