@@ -8,8 +8,25 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import React from 'react';
+
+import APIHandler from '../Api';
 
 const DrawerContents = () => {
+
+    const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const name = event.target.value;
+        if(name.length > 0) {
+            APIHandler.searchUser(name)
+            .then( response => {
+                console.log(response.data);
+            })
+            .catch ( error => {
+                console.log(error);
+            });
+        }
+    };
+
     return(
         <Container
             sx={{
@@ -32,47 +49,13 @@ const DrawerContents = () => {
                     <TextField
                         fullWidth
                         label='Search'
+                        onChange={onChangeHandler}
                         size='small'
                         variant='filled'
                     />
                 </Toolbar>
             </AppBar>
             <Box>
-                <ChatTab
-                    avatar={"AS"}
-                    lastMessage={"the last message"}
-                    name={"Andrew Shinjo"}
-                />
-                <ChatTab
-                    avatar={"AS"}
-                    lastMessage={"the last message"}
-                    name={"Andrew Shinjo"}
-                />
-                <ChatTab
-                    avatar={"AS"}
-                    lastMessage={"the last message"}
-                    name={"Andrew Shinjo"}
-                />
-                <ChatTab
-                    avatar={"AS"}
-                    lastMessage={"the last message"}
-                    name={"Andrew Shinjo"}
-                />
-                <ChatTab
-                    avatar={"AS"}
-                    lastMessage={"the last message"}
-                    name={"Andrew Shinjo"}
-                />
-                <ChatTab
-                    avatar={"AS"}
-                    lastMessage={"the last message"}
-                    name={"Andrew Shinjo"}
-                />
-                <ChatTab
-                    avatar={"AS"}
-                    lastMessage={"the last message"}
-                    name={"Andrew Shinjo"}
-                />
             </Box>
         </Container>
     );

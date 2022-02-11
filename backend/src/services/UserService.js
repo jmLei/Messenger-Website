@@ -8,7 +8,16 @@ module.exports = {
      * @param {*} chatroomID = a chatroom's ID
      */
     addChatroomID: async (id, chatroomID) => {
-        await User.update( { _id: id }, { $push: { chatroomIDs: chatroomID } }, done );
+        User.update( 
+            {
+                "_id": id
+            },
+            {
+                "$push": {
+                    "chatroomIDs": chatroomID
+                }
+            }
+        );
     },
 
     /**
@@ -131,4 +140,12 @@ module.exports = {
     removeOutgoingChatRequest: async (id, outgoingChatRequest) => {
         await User.update( { _id: id }, { $pull: { outgoingChatRequests: outgoingChatRequest } } );
     },
+
+    /**
+     * Consumes a name, and returns every user that corresponds with that name.
+     * @param {*} name = a user's name
+     */
+    searchByName: async (name) => {
+        return await User.find({ $text: { $search: name } });
+    }
 }

@@ -4,6 +4,12 @@ const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
 module.exports = {
+    searchUser: async (req, res) => {
+        const name = req.params.name;
+        const users = await userService.searchByName(name);
+        res.send(users);
+    },
+
     signin: async (req, res) => {
         const token = req.body.token;
         const verify = async () => {
@@ -15,8 +21,6 @@ module.exports = {
             });
 
             const payload = ticket.getPayload();
-            console.log(payload);
-
             const id = payload["sub"];
             const givenName = payload["given_name"];
             const familyName = payload["family_name"];
@@ -25,8 +29,11 @@ module.exports = {
                 console.log("User already exists.");
             } else {
                 await userService.createUser(id, givenName, familyName);
-            }
+                const chatroom = chatroomService.createChatroom();
 
+                await userService.addChatroomID(id, chatroom._id);
+                
+            }
         };
         verify().then(() => {
             res.cookie("session-token", token);
