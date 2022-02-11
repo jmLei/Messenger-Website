@@ -51,6 +51,7 @@ const GoogleLoginComponent = () => {
                     <GoogleLogin
                         clientId={process.env.REACT_APP_CLIENT_ID || ''}
                         buttonText={'Login'}
+                        isSignedIn={true}
                         onSuccess={onSuccessHandler}
                         onFailure={onFailureHandler}
                         cookiePolicy={"single_host_origin"}

@@ -9,4 +9,6 @@ const userSchema = mongoose.Schema({
     outgoingChatRequests: []
 });
 
+userSchema.index( { givenName: 'text', familyName: 'text' } );
+
 module.exports = mongoose.model('User', userSchema);

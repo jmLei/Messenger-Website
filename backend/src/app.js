@@ -71,8 +71,10 @@ app.use((req, res, next) => {
 
 // Routes
 
+const chatroomRoute = require('./routes/ChatroomRoute');
 const userRoute = require("./routes/UserRoute");
-app.use("/user", userRoute);
+app.use('chatrooms', chatroomRoute);
+app.use("/users", userRoute);
 
 httpServer.listen(8080, () => {
     console.log("Server running on port 8080.");
